@@ -9,7 +9,7 @@ tic
 clc;close all; clear all;
 T1=1:1:24; %Time steps
 size(T1);
-Array = readtable('solar3.csv');% read a single asset
+Array = readtable('Dropbox/HighLevel-Data/SimDat_20181126/solar/solar3.csv');% read a single asset
 a_array=[];b_array=[];
 for k=3:1000
     a=[];b=[];
@@ -85,18 +85,12 @@ ylabel('coeff')
 
 figure(2);
 plot(T1,coeff(:,1),'.-b','markersize',20)
-legend coeff1
 hold on;
 plot(T1,coeff(:,2),'.-r','markersize',20)
-legend coeff2
 plot(T1,coeff(:,3),'.-g','markersize',20)
-legend coeff3
 plot(T1,coeff(:,4),'.-y','markersize',20)
-legend coeff4
 plot(T1,coeff(:,5),'.-c','markersize',20)
-legend coeff5
 plot(T1,coeff(:,6),'.-k','markersize',20)
-legend coeff6
 xlabel('Time')
 ylabel('coeff')
 
