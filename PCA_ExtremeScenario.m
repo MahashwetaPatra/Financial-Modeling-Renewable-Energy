@@ -1,7 +1,8 @@
 %
-% NOTE: This is for calculating the shows the boundary of score phase space plot, i.e., showig the extreme scenarios 
+% NOTE: This is for calculating the boundary of score phase space plot, i.e., showig the extreme scenarios 
 %
 % HIST:  - 27 Sep, 2021: Created by Patra
+%        - 07 Oct, 2021: Convex hull peeling is added through the function boundary to recognize the extreme scenario boundary
 %=========================================================================
 function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Array);
 T1=1:1:24; %Time steps
