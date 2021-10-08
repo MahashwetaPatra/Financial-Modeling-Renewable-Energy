@@ -1,9 +1,9 @@
 %
-% NOTE: This is for calculating teh time series of actual , forcast and mean
+% NOTE: This function is for doing the PCA analysis
 %
 % HIST:  - 1 Sep, 2021: Created by Patra
 %        - 7th Sep, Principal component analysis is done,
-%        -07 Oct, saving data and figure to diferent folder   
+%        -07 Oct, saving PCA factors, variance explained and figure showing the PCA factor to folder   
 %=========================================================================
 function explained_series=PCA_Assets(assettype,year,filename,Array);
 %Array = readtable('Adamstown_Solar.csv');% read a single asset
