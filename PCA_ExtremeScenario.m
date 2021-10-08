@@ -42,6 +42,7 @@ subplot(1,2,2)
 A=[score(:,1),score(:,2)];
 plot(score(:,1),score(:,2), '.green', 'markersize', 5)
 x=score(:,1);y=score(:,2);
+%j = convhull(x,y);
 j = boundary(x,y,1.0);
 hold on;
 plot(x(j),y(j));
