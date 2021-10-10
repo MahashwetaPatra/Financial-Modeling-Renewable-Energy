@@ -8,4 +8,5 @@ filename = input(prompt, 's')
 %file=strcat('Dropbox/HighLevel-Data/SimDat_',year,'/',assettype,'/',filename);
 file=strcat('ORFEUS/SimDat_',year,'/',assettype,'/',filename);
 Array=readtable(file);
-PCA_ExtremeScenario=PCA_ExtremeScenario(year, assettype, filename,Array)
+numExtremeScen=10;
+PCA_ExtremeScenario=PCA_ExtremeScenario(year, assettype, filename,Array,numExtremeScen);

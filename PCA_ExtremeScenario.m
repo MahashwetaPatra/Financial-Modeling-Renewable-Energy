@@ -1,10 +1,9 @@
 %
-% NOTE: This is for calculating the boundary of score phase space plot, i.e., showig the extreme scenarios 
+% NOTE: This is for calculating the shows the boundary of score phase space plot, i.e., showig the extreme scenarios 
 %
 % HIST:  - 27 Sep, 2021: Created by Patra
-%        - 07 Oct, 2021: Convex hull peeling is added through the function boundary to recognize the extreme scenario boundary
 %=========================================================================
-function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Array);
+function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Array,numExtremeScen);
 T1=1:1:24; %Time steps
 scenario_num=size(Array);
 b_array=[];
@@ -42,16 +41,23 @@ subplot(1,2,2)
 A=[score(:,1),score(:,2)];
 plot(score(:,1),score(:,2), '.green', 'markersize', 5)
 x=score(:,1);y=score(:,2);
-%j = convhull(x,y);
 j = boundary(x,y,1.0);
+%j = convhull(x,y);
 hold on;
 plot(x(j),y(j));
 strValues =strtrim(cellstr(num2str([j],'%d')));
 text(x(j),y(j),strValues); 
+sizej=size(j)
+points=0.0;
 for k=1:size(j)
     m=j(k);
-    subplot(1,2,1)
-    plot(T1,b_array(m,:),'LineWidth',0.02)
-    hold on;
+    check=x(k);
+    if (check<0 & points<numExtremeScen)
+        points=points+1;
+        subplot(1,2,1)
+        plot(T1,b_array(m,:),'LineWidth',0.02)
+        hold on;
+    end
 end
+points
 end
