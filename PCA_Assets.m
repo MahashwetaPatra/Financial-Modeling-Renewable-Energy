@@ -1,9 +1,9 @@
 %
-% NOTE: This function is for doing the PCA analysis
+% NOTE: This is for calculating teh time series of actual , forcast and mean
 %
 % HIST:  - 1 Sep, 2021: Created by Patra
 %        - 7th Sep, Principal component analysis is done,
-%        -07 Oct, saving PCA factors, variance explained and figure showing the PCA factor to folder   
+%        -07 Oct, saving data and figure to diferent folder   
 %=========================================================================
 function explained_series=PCA_Assets(assettype,year,filename,Array);
 %Array = readtable('Adamstown_Solar.csv');% read a single asset
@@ -30,11 +30,11 @@ coeff(:,1);
 [pathstr,name,ext] = fileparts(filename);
 for i=1:4
     if assettype==1
-        Fn=strcat('ORFEUS/SimDat_',num2str(year),'/solar/Coefficients/',name,'20170101coefficient',num2str(i),ext);
+        Fn=strcat('Coefficients/',name,'solar_coefficient',num2str(i),num2str(year),ext);
     elseif assettype==2
-        Fn=strcat('ORFEUS/SimDat_',num2str(year),'/wind/Coefficients/',name,'20170101coefficient',num2str(i),ext);
+        Fn=strcat('Coefficients/',name,'wind_coefficient',num2str(i),num2str(year),ext);
     elseif assettype==3
-        Fn=strcat('ORFEUS/SimDat_',num2str(year),'/load/Coefficients/',name,'20170101coefficient',num2str(i),ext);
+        Fn=strcat('Coefficients/',name,'load_coefficient',num2str(i),num2str(year),ext);
     end
     
     if i==1
@@ -56,28 +56,28 @@ for i=1:4
     end
 end
 if assettype==1
-    Fn1=strcat('ORFEUS/SimDat_',num2str(year),'/solar/Coefficients/',name,'explained_series20170101',ext);
+    Fn1=strcat('Coefficients/',name,'solar_explained_series',num2str(year),ext);
 elseif assettype==2
-    Fn1=strcat('ORFEUS/SimDat_',num2str(year),'/wind/Coefficients/',name,'explained_series20170101',ext);
+    Fn1=strcat('Coefficients/',name,'wind_explained_series',num2str(year),ext);
 elseif assettype==3
-    Fn1=strcat('ORFEUS/SimDat_',num2str(year),'/load/Coefficients/',name,'explained_series20170101',ext);
+    Fn1=strcat('Coefficients/',name,'load_explained_series',num2str(year),ext);
 end
 fid = fopen(Fn1,'wt');
 fprintf(fid,'%d\n',explained_series);
 fclose(fid);
-if assettype==1
-    Fig=strcat('ORFEUS/SimDat_',num2str(year),'/solar/Coefficients/',name,'coefficient20170101.png');
-elseif assettype==2
-    Fig=strcat('ORFEUS/SimDat_',num2str(year),'/wind/Coefficients/',name,'coefficient20170101.png');
-elseif assettype==3
-    Fig=strcat('ORFEUS/SimDat_',num2str(year),'/load/Coefficients/',name,'coefficient20170101.png');
-end
-Title=strcat(name,'coefficient',num2str(year));
-
-plot(T1,coeff(:,1),'.-b','markersize',20)
-ylim([-0.1 0.65])
-xlabel('Time')
-ylabel('coeff1')
-title(Title)
-saveas(gcf,Fig)
+% 
+% if assettype==1
+%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/solar/Coefficients/',name,'coefficient20170101.png');
+% elseif assettype==2
+%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/wind/Coefficients/',name,'coefficient20170101.png');
+% elseif assettype==3
+%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/load/Coefficients/',name,'coefficient20170101.png');
+% end
+% Title=strcat(name,'coefficient',num2str(year));
+% plot(T1,coeff(:,1),'.-b','markersize',20)
+% ylim([-0.1 0.65])
+% xlabel('Time')
+% ylabel('coeff1')
+% title(Title)
+% saveas(gcf,Fig)
 end

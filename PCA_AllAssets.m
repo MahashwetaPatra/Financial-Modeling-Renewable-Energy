@@ -12,7 +12,7 @@
 tic
 clc;close all; clear all;
 %year=20170102;
-for year=20170103:20170110
+for year=20170701:20170731
 for assettype=1:3
     if assettype==1
         files = dir(strcat('ORFEUS/SimDat_',num2str(year),'/solar/*.csv'));% calls all the assets from a folder
