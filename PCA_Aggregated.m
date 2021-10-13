@@ -1,9 +1,8 @@
-function PCA_Aggregated=PCA_Aggregated(zonetype,files)
-%zones=[num2str(Coast);num2str(East);num2str(FarWest);num2str(NorthCentral);num2str(North);num2str(SouthCentral);num2str(South);num2str(West)];
+function PCA_Aggregated=PCA_Aggregated(sizeZones,ZoneName,ZoneType)
 Matrix=[];b_array=[];sum_array=0;coeff_matrix=[];
 T1=1:1:24;%Time steps
-for p=1:length(files)
-    Array = readtable(files(p).name);
+for p=1:sizeZones
+    Array = readtable(ZoneName(p).name);
     for k=3:1000
         a=[];b=[];
         col = Array(k,:);
@@ -23,12 +22,11 @@ for p=1:length(files)
     sum_array=sum_array+b_array;
 end
 [coeff]=pca(sum_array);
-figure(1);
-subplot(2,4,zonetype)
-plot(T1,coeff(:,1),'.-black','markersize',20)
+figure
+plot(T1,coeff(:,1),'.-black','markersize',20)%plotting the 1st PCA factor for the sum of the assets in a zone
 xlabel('Time (hours)')
 ylabel('coeff')
 hold on;
-plot(T1,coeff_matrix,'-b','markersize',5)%plotting the coefficient1
-%title(zones(zonetype))
+plot(T1,coeff_matrix,'-b','markersize',5)%plotting the 1st PCA factor for individual assets
+title(ZoneType)
 end
