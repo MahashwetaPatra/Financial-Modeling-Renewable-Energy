@@ -46,8 +46,15 @@ j = boundary(x,y,1.0);
 hold on;
 plot(x(j),y(j));
 strValues =strtrim(cellstr(num2str([j],'%d')));
-text(x(j),y(j),strValues); 
-sizej=size(j)
+text(x(j),y(j),strValues);
+hold on;
+sizej=size(j);
+%eps=1e-5;
+%x1=3.78;y1=-2.18;
+%for k=3:1002
+%idx = find(abs(score(k,1 )-x1)<eps)
+plot(score(100,1),score(100,2), '.black', 'markersize', 20)
+%end
 points=0.0;
 for k=1:size(j)
     m=j(k);
@@ -59,5 +66,6 @@ for k=1:size(j)
         hold on;
     end
 end
-points
+plot(T1,b_array(100,:),'blue','LineWidth',2.0)
+points;
 end

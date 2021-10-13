@@ -5,9 +5,8 @@
 %        - 7th Sep, Principal component analysis is done,
 %        -07 Oct, saving data and figure to diferent folder   
 %=========================================================================
-function explained_series=PCA_Assets(assettype,year,filename,Array);
-%Array = readtable('Adamstown_Solar.csv');% read a single asset
-T1=1:1:24; %Time steps
+function CoeffMatrix=PCA_Assets(assettype,year,filename,Array);
+% T1=1:1:24; %Time steps
 SizeScenario=size(Array);
 b_array=[];
 for k=3:SizeScenario(1)
@@ -21,63 +20,23 @@ for k=3:SizeScenario(1)
         b_array(k,i)=b(i);
     end
 end
-size(b_array);%final array of scenarios and time
-[coeff,score,latent, tsquared, explained]=pca(b_array);
-explained_series=[explained(1);explained(2);explained(3);explained(4)];
-%[coeff]=pca(b_array);
-coeff(:,1);
-%filename='Adamstown_Solar.csv';
-[pathstr,name,ext] = fileparts(filename);
-for i=1:4
-    if assettype==1
-        Fn=strcat('Coefficients/',name,'solar_coefficient',num2str(i),num2str(year),ext);
-    elseif assettype==2
-        Fn=strcat('Coefficients/',name,'wind_coefficient',num2str(i),num2str(year),ext);
-    elseif assettype==3
-        Fn=strcat('Coefficients/',name,'load_coefficient',num2str(i),num2str(year),ext);
-    end
-    
-    if i==1
-        fid = fopen(Fn,'wt');
-        fprintf(fid,'%d\n',coeff(:,i));
-        fclose(fid);
-    elseif i==2
-        fid = fopen(Fn,'wt');
-        fprintf(fid,'%d\n',coeff(:,i));
-        fclose(fid);
-    elseif i==3
-        fid = fopen(Fn,'wt');
-        fprintf(fid,'%d\n',coeff(:,i));
-        fclose(fid);
-    elseif i==4
-        fid = fopen(Fn,'wt');
-        fprintf(fid,'%d\n',coeff(:,i));
-        fclose(fid);
-    end
-end
+%[coeff,score,latent, tsquared, explained]=pca(b_array);
+[coeff]=pca(b_array);
+CoeffMatrix=[coeff(:,1);coeff(:,2);coeff(:,3);coeff(:,4)];
 if assettype==1
-    Fn1=strcat('Coefficients/',name,'solar_explained_series',num2str(year),ext);
+    Fn=strcat('Coefficients/solar_coefficient',num2str(year),'.csv');
+    fid = fopen(Fn,'a+');
+    fprintf(fid,'%d\n',CoeffMatrix);
+    fclose(fid);   
 elseif assettype==2
-    Fn1=strcat('Coefficients/',name,'wind_explained_series',num2str(year),ext);
+    Fn=strcat('Coefficients/wind_coefficient',num2str(year),'.csv');
+    fid = fopen(Fn,'a+');
+    fprintf(fid,'%d\n',CoeffMatrix);
+    fclose(fid);  
 elseif assettype==3
-    Fn1=strcat('Coefficients/',name,'load_explained_series',num2str(year),ext);
+    Fn=strcat('Coefficients/load_coefficient',num2str(year),'.csv');
+    fid = fopen(Fn,'a+');
+    fprintf(fid,'%d\n',CoeffMatrix);
+    fclose(fid); 
 end
-fid = fopen(Fn1,'wt');
-fprintf(fid,'%d\n',explained_series);
-fclose(fid);
-% 
-% if assettype==1
-%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/solar/Coefficients/',name,'coefficient20170101.png');
-% elseif assettype==2
-%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/wind/Coefficients/',name,'coefficient20170101.png');
-% elseif assettype==3
-%     Fig=strcat('ORFEUS/SimDat_',num2str(year),'/load/Coefficients/',name,'coefficient20170101.png');
-% end
-% Title=strcat(name,'coefficient',num2str(year));
-% plot(T1,coeff(:,1),'.-b','markersize',20)
-% ylim([-0.1 0.65])
-% xlabel('Time')
-% ylabel('coeff1')
-% title(Title)
-% saveas(gcf,Fig)
 end

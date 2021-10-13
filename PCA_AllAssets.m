@@ -11,9 +11,9 @@
 %=========================================================================
 tic
 clc;close all; clear all;
-%year=20170102;
-for year=20170701:20170731
-for assettype=1:3
+%year=20170101;
+for year=20170101:20170131
+for assettype=1:1
     if assettype==1
         files = dir(strcat('ORFEUS/SimDat_',num2str(year),'/solar/*.csv'));% calls all the assets from a folder
     elseif assettype==2
@@ -21,18 +21,18 @@ for assettype=1:3
     elseif assettype==3
         files = dir(strcat('ORFEUS/SimDat_',num2str(year),'/load/*.csv'));% calls all the assets from a folder
     end
-for i=1:length(files)% calling the matlab file latent to do PCA for all assets
-    if assettype==1
-        filename=strcat('ORFEUS/SimDat_',num2str(year),'/solar/',files(i).name);
-    elseif assettype==2
-        filename=strcat('ORFEUS/SimDat_',num2str(year),'/wind/',files(i).name);
-    elseif assettype==3
-        filename=strcat('ORFEUS/SimDat_',num2str(year),'/load/',files(i).name);
+    for i=1:length(files)
+        if assettype==1
+            filename=strcat('ORFEUS/SimDat_',num2str(year),'/solar/',files(i).name);
+        elseif assettype==2
+            filename=strcat('ORFEUS/SimDat_',num2str(year),'/wind/',files(i).name);
+        elseif assettype==3
+            filename=strcat('ORFEUS/SimDat_',num2str(year),'/load/',files(i).name);
+        end
+        Array = readtable(filename);
+        filenameN=files(i).name;
+        PCA_Assets(assettype,year,filenameN,Array);      
     end
-    Array = readtable(filename);
-    filenameN=files(i).name;
-    PCA_Assets(assettype,year,filenameN,Array); 
-end
 end
 end
 toc
