@@ -12,7 +12,6 @@ videoname=strcat(assettype,PCAfactor,year,'.avi');
 writerObj = VideoWriter(videoname); % Name it.
 writerObj.FrameRate = framerate; % How many frames per second.
 open(writerObj);
-ylim([-0.6 0.65])
 for date=startdate:enddate;
     i=(date-1)*96+2;j=i+23;
     if contains(PCAfactor, 'coefficient1')
@@ -32,6 +31,7 @@ for date=startdate:enddate;
     pause(0.1);
     figure(PCA_Animation); % Makes sure you use your desired frame.
     plot(x,y,'.-b');
+    ylim([-0.6 0.65])
     xlabel('Time (hours)')
     ylabel('Energy')
     title(strcat('AssetNumber',num2str(Assetnumber),'date',num2str(date)))
