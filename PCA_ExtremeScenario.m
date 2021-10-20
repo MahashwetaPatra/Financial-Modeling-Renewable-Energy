@@ -7,7 +7,7 @@ function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Arra
 T1=1:1:24; %Time steps
 scenario_num=size(Array);
 b_array=[];
-for k=3:scenario_num(1)
+parfor k=3:scenario_num(1)
     b=[];
     col = Array(k,:);
     hold on; 
@@ -15,14 +15,16 @@ for k=3:scenario_num(1)
         j=i+2;
         b=[b;col{1,j}];
     end
-    figure(1)
-    subplot(1,2,1)
-%    plot(T1,b,'Color', [0.7 0.7 0.7],'markersize',5)
-%    hold on;
+    
     for i=1:24
         b_array(k,i)=b(i);
     end
 end
+figure(1);
+subplot(1,2,1)
+ylim([-10 250])
+plot(T1,b_array,'Color', [0.7 0.7 0.7],'markersize',5)
+hold on;
 size(b_array);%final array of scenarios and time
 bm=mean(b_array);% calculating the mean of all the scenarios
 PCA_ExtremeScenario=plot(T1,bm,'.-black','markersize',20)

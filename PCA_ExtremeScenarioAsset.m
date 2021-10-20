@@ -1,3 +1,4 @@
+tic
 clc;close all;clear all;
 prompt = 'What is the date? ';
 year = input(prompt,'s')
@@ -10,3 +11,4 @@ file=strcat('ORFEUS/SimDat_',year,'/',assettype,'/',filename);
 Array=readtable(file);
 numExtremeScen=10;
 PCA_ExtremeScenario=PCA_ExtremeScenario(year, assettype, filename,Array,numExtremeScen);
+toc
