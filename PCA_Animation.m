@@ -5,15 +5,16 @@
 function PCA_Animation=PCA_Animation(year, startdate, enddate, assettype, Assetnumber, PCAfactor, framerate)
 T1=1:1:24; %Time steps
 coeff1=[];
-Array=readtable('Coefficients/solar_coefficient.csv');
+Array=readtable(strcat('Coefficients/',assettype,'_coefficient.csv'));
 column=Assetnumber+1;
 PCA_Animation = figure;
 videoname=strcat(assettype,PCAfactor,year,'.avi');
 writerObj = VideoWriter(videoname); % Name it.
 writerObj.FrameRate = framerate; % How many frames per second.
 open(writerObj);
-for date=startdate:enddate;
-    i=(date-1)*96+2;j=i+23;
+for date=startdate:enddate
+    i=(date-1)*96+2;
+    j=i+23;
     if contains(PCAfactor, 'coefficient1')
         coeff1=Array{i:j,column};
     elseif contains(PCAfactor, 'coefficient2')
