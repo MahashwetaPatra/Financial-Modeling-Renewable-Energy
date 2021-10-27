@@ -13,4 +13,7 @@ prompt = 'What PCA factor we want the Animation with, for example coefficient1? 
 PCAfactor = input(prompt, 's')
 prompt = 'What is the framerate, for example 2? ';
 framerate = input(prompt)
-PCA_Animation=PCA_Animation(year_range, startdate, enddate, assettype, Assetnumber,PCAfactor, framerate);
+prompt = 'Do you want to save the code?, say yes or no';
+saveornot = input(prompt,"s")
+
+PCA_Animation=PCA_Animation(year_range, startdate, enddate, assettype, Assetnumber,PCAfactor, framerate,saveornot);
