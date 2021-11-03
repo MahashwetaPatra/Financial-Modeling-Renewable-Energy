@@ -9,7 +9,7 @@
 
 tic
 clc;close all; clear all;
-IntraDayKS=[]; IntraDayKS2=[];
+IntraDayKS=[]; IntraDayKS2=[];IntraDayKS3=[]; IntraDayKS4=[];
 
 for Assetnumber=1:115
     column=Assetnumber+1;
@@ -27,6 +27,21 @@ for Assetnumber=1:115
     IntraDayKS2=[IntraDayKS2;ksstat];
 end
 
+for Assetnumber=1:115
+    column=Assetnumber+1;
+    Array = readtable('Output/Percentiles/IntraDayNew3/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
+    file=Array{:,column};
+    [h,p,ksstat,cv] = kstest(file);
+    IntraDayKS3=[IntraDayKS3;ksstat];
+end
+
+for Assetnumber=1:115
+    column=Assetnumber+1;
+    Array = readtable('Output/Percentiles/IntraDayNew4/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
+    file=Array{:,column};
+    [h,p,ksstat,cv] = kstest(file);
+    IntraDayKS4=[IntraDayKS4;ksstat];
+end
 Array = readtable('Output/Percentiles/IntraDayNew1/State/Percentiles_Scoville_All.csv');% calls all the assets from a folder
 file=Array{:,2};
 figure(2);
@@ -221,16 +236,24 @@ ylabel(han,'Intra Day 2 & Intra Day 1');
 IntraDay1KSValues=IntraDayP(:,3)
 IntraDay2KSValues=IntraDayP2(:,3)
 figure(5);
-subplot(1,2,1)
+subplot(2,2,1)
 histogram(IntraDayKS,10)
-subplot(1,2,2)
+subplot(2,2,2)
 histogram(IntraDayKS2,10)
+subplot(2,2,3)
+histogram(IntraDayKS3,10)
+subplot(2,2,4)
+histogram(IntraDayKS4,10)
 
-IntraDay1KSValues=IntraDayP(:,4)
-IntraDay2KSValues=IntraDayP2(:,4)
+
 figure(6);
-subplot(1,2,1)
+subplot(2,2,1)
 histogram(IntraDayKS,10)
-subplot(1,2,2)
+subplot(2,2,2)
 histogram(IntraDayKS2,10)
+subplot(2,2,3)
+histogram(IntraDayKS3,10)
+subplot(2,2,4)
+histogram(IntraDayKS4,10)
+
 toc
