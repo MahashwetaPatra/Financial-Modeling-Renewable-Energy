@@ -11,40 +11,33 @@ tic
 clc;close all; clear all;
 IntraDayKS=[]; IntraDayKS2=[];IntraDayKS3=[]; IntraDayKS4=[];
 
-for Assetnumber=1:115
+for Assetnumber=1:115 %calls all the assets from intraday 1,2,3 & 4
     column=Assetnumber+1;
     Array = readtable('Output/Percentiles/IntraDayNew1/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
     file=Array{:,column};
     [h,p,ksstat,cv] = kstest(file);
-    IntraDayKS=[IntraDayKS;ksstat];
-end
-
-for Assetnumber=1:115
-    column=Assetnumber+1;
+    IntraDayKS=[IntraDayKS;ksstat cv];
+    
     Array = readtable('Output/Percentiles/IntraDayNew2/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
     file=Array{:,column};
     [h,p,ksstat,cv] = kstest(file);
-    IntraDayKS2=[IntraDayKS2;ksstat];
-end
+    IntraDayKS2=[IntraDayKS2;ksstat cv];
 
-for Assetnumber=1:115
-    column=Assetnumber+1;
     Array = readtable('Output/Percentiles/IntraDayNew3/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
     file=Array{:,column};
     [h,p,ksstat,cv] = kstest(file);
-    IntraDayKS3=[IntraDayKS3;ksstat];
-end
+    IntraDayKS3=[IntraDayKS3;ksstat cv];
 
-for Assetnumber=1:115
-    column=Assetnumber+1;
     Array = readtable('Output/Percentiles/IntraDayNew4/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
     file=Array{:,column};
     [h,p,ksstat,cv] = kstest(file);
-    IntraDayKS4=[IntraDayKS4;ksstat];
+    IntraDayKS4=[IntraDayKS4;ksstat cv];
+
 end
+
 Array = readtable('Output/Percentiles/IntraDayNew1/State/Percentiles_Scoville_All.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(2);
+figure(1);
 subplot(1,2,1)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
@@ -52,7 +45,7 @@ title(strcat('Intra Day 1,' ,num2str(ksstat),'Aggregated Asset'))
 
 Array = readtable('Output/Percentiles/IntraDayNew2/State/Percentiles_Scoville_All.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(2);
+figure(1);
 subplot(1,2,2)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
@@ -62,13 +55,13 @@ IntraDayP=[]; IntraDayP2=[];
 
 Array = readtable('Output/Percentiles/IntraDayNew1/Zonal/Percentiles_Scoville_Far_West.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,1)
 histogram(file,20);
 [h,p,ksstat,cv] = kstest(file);
 IntraDayP=[IntraDayP;h p ksstat cv];
 title('FarWest')
-figure(4);
+figure(3);
 subplot(2,5,1)
 cdfplot(file)
 hold on
@@ -79,13 +72,13 @@ title('FarWest')
 
 Array = readtable('Output/Percentiles/IntraDayNew1/Zonal/Percentiles_Scoville_North.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,2)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP=[IntraDayP;h p ksstat cv];
 title('North')
-figure(4);
+figure(3);
 subplot(2,5,2)
 cdfplot(file)
 hold on
@@ -96,13 +89,13 @@ title('North')
 
 Array = readtable('Output/Percentiles/IntraDayNew1/Zonal/Percentiles_Scoville_North_Central.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,3)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP=[IntraDayP;h p ksstat cv];
 title('NorthCentral')
-figure(4);
+figure(3);
 subplot(2,5,3)
 cdfplot(file)
 hold on
@@ -113,13 +106,13 @@ title('NorthCentral')
 
 Array = readtable('Output/Percentiles/IntraDayNew1/Zonal/Percentiles_Scoville_South.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,4)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP=[IntraDayP;h p ksstat cv];
 title('South')
-figure(4);
+figure(3);
 subplot(2,5,4)
 cdfplot(file)
 hold on
@@ -130,13 +123,13 @@ title('South')
 
 Array = readtable('Output/Percentiles/IntraDayNew1/Zonal/Percentiles_Scoville_West.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,5)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP=[IntraDayP;h p ksstat cv];
 title('West')
-figure(4);
+figure(3);
 subplot(2,5,5)
 cdfplot(file)
 hold on
@@ -147,13 +140,13 @@ title('West')
 
 Array = readtable('Output/Percentiles/IntraDayNew2/Zonal/Percentiles_Scoville_Far_West.csv');% calls all the assets from a folder
 file=Array{:,2};
-fig=figure(3)
+fig=figure(2)
 subplot(2,5,6)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP2=[IntraDayP2;h p ksstat cv];
 title('Far West')
-figure(4);
+figure(3);
 subplot(2,5,6)
 cdfplot(file)
 hold on
@@ -164,13 +157,13 @@ title('Far West')
 
 Array = readtable('Output/Percentiles/IntraDayNew2/Zonal/Percentiles_Scoville_North.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,7)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP2=[IntraDayP2;h p ksstat cv];
 title('North')
-figure(4);
+figure(3);
 subplot(2,5,7)
 cdfplot(file)
 hold on
@@ -181,13 +174,13 @@ title('North')
 
 Array = readtable('Output/Percentiles/IntraDayNew2/Zonal/Percentiles_Scoville_North_Central.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,8)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP2=[IntraDayP2;h p ksstat cv];
 title('North Central')
-figure(4);
+figure(3);
 subplot(2,5,8)
 cdfplot(file)
 hold on
@@ -198,13 +191,13 @@ title('North Central')
 
 Array = readtable('Output/Percentiles/IntraDayNew2/Zonal/Percentiles_Scoville_South.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,9)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP2=[IntraDayP2;h p ksstat cv];
 title('South')
-figure(4);
+figure(3);
 subplot(2,5,9)
 cdfplot(file)
 hold on
@@ -215,14 +208,14 @@ title('South')
 
 Array = readtable('Output/Percentiles/IntraDayNew2/Zonal/Percentiles_Scoville_West.csv');% calls all the assets from a folder
 file=Array{:,2};
-figure(3)
+figure(2)
 subplot(2,5,10)
 histogram(file,20);
 [h,p,ksstat,cv]  = kstest(file);
 IntraDayP2=[IntraDayP2;h p ksstat cv];
 title('West')
 han=axes(fig,'visible','off'); 
-figure(4);
+figure(3);
 subplot(2,5,10)
 cdfplot(file)
 hold on
@@ -233,27 +226,13 @@ title('West')
 han.YLabel.Visible='on';
 ylabel(han,'Intra Day 2 & Intra Day 1');
 
-IntraDay1KSValues=IntraDayP(:,3)
-IntraDay2KSValues=IntraDayP2(:,3)
-figure(5);
+figure(4);
 subplot(2,2,1)
-histogram(IntraDayKS,10)
+histogram(IntraDayKS(:,1),10)
 subplot(2,2,2)
-histogram(IntraDayKS2,10)
+histogram(IntraDayKS2(:,1),10)
 subplot(2,2,3)
-histogram(IntraDayKS3,10)
+histogram(IntraDayKS3(:,1),10)
 subplot(2,2,4)
-histogram(IntraDayKS4,10)
-
-
-figure(6);
-subplot(2,2,1)
-histogram(IntraDayKS,10)
-subplot(2,2,2)
-histogram(IntraDayKS2,10)
-subplot(2,2,3)
-histogram(IntraDayKS3,10)
-subplot(2,2,4)
-histogram(IntraDayKS4,10)
-
+histogram(IntraDayKS4(:,1),10)
 toc
