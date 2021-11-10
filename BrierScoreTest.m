@@ -8,7 +8,7 @@ tic
 clc;close all; clear all;
 for day=1:4
     BrierScoreSeries=[];
-    files = dir('Scovilleriskpartners/CSV/IntraDay1/SimDat_20170101/wind/*.csv');
+    files = dir('Scovilleriskpartners/CSV/IntraDay1/SimDat_20170101/solar/*.csv');
     for i=1:length(files)
         BrierScore=0.0;number=0.0;
         datetime.setDefaultFormats('defaultdate','yyyyMMdd')
@@ -18,7 +18,7 @@ for day=1:4
         filename=files(i).name;
         for k=1:365
             year=char(date(k));
-            name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',filename);
+            name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/solar/',filename);
             Array = readtable(name);
             score=0.0;
             for column=1:6
@@ -49,6 +49,6 @@ figure(1)
 subplot(2,2,day)
 histogram(BrierScoreSeries,10)
 xlim([0,0.3])
-ylim([0,50])
+ylim([0,12])
 end
 toc
