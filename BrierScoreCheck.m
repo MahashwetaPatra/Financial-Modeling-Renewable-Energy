@@ -4,8 +4,8 @@
 % HIST:  - 11 Aug, 2021: Created by Patra
 %         
 %=========================================================================
-function BrierScoreCheck(filename)
-BrierScoreSeries=[];
+function BrierScoreCheck(filename);
+BrierScoreSeries=[];NumberSeries=[];
 for day=1:4
     BrierScore=0.0;number=0.0;
     datetime.setDefaultFormats('defaultdate','yyyyMMdd')
@@ -38,8 +38,10 @@ for day=1:4
         BrierScore=BrierScore+score;
     end
     BrierScore;
-    number
+    number;
     BrierScoreSeries=[BrierScoreSeries;BrierScore/number];
+    NumberSeries=[NumberSeries;number];
 end
-BrierScoreCheck=BrierScoreSeries
+BrierScoreSeries
+NumberSeries
 end
