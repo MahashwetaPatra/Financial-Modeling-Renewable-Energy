@@ -1,5 +1,5 @@
 %
-% NOTE:    function that calculates the Brier Score for the  max Solar generation
+% NOTE:    function that calculates the Brier Score for the  max wind generation
 %
 % HIST:  - 11 Aug, 2021: Created by Patra
 %         -Added more notes to it
@@ -14,8 +14,8 @@ time=char(date(1));
 for k=1:730
     year=char(date(k));
     %name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/solar/',string(filename));
-    name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/solar/',string(filename));
-    %name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',string(filename));
+    %name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/solar/',string(filename));
+    name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',string(filename));
     %name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/wind/',string(filename));
     Array = readtable(name);
     for column=1:6 % For intraday block it is 6, for DA the value is 24
