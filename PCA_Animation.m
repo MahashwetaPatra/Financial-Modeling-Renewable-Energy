@@ -34,7 +34,7 @@ for date=startdate:enddate
     plot(x,y,'.-b');
     ylim([-0.6 0.65])
     xlabel('Time (hours)')
-    ylabel('Energy')
+    ylabel('Energy(MWh)')
     title(strcat('AssetNumber::',num2str(Assetnumber),'Date::',num2str(date)))
     if contains(saveornot, 'yes')
         frame = getframe(gcf); % 'gcf' can handle if you zoom in to take a movie.
