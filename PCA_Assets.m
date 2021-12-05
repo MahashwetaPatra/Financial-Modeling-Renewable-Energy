@@ -5,17 +5,15 @@
 %        - 7th Sep, Principal component analysis is done,
 %        -07 Oct, saving data and figure to diferent folder   
 %=========================================================================
-function CoeffMatrix=PCA_Assets(filename,Array);
+function CoeffMatrix=PCA_Assets(Array)
 SizeScenario=size(Array);
-b_array=[];
+b_array=zeros(1003,24);
 for k=3:SizeScenario(1)
-    b=[];
+    b=zeros(24,1);
     col = Array(k,:);
     for i=1:24% put the asset in a array
         j=i+2;
-        b=[b;col{1,j}];
-    end
-    for i=1:24
+        b(i)=col{1,j};
         b_array(k,i)=b(i);
     end
 end
