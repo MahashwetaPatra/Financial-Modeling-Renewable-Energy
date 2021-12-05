@@ -3,80 +3,81 @@
 %
 % HIST:  - 27 Sep, 2021: Created by Patra
 %=========================================================================
-function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Array,numExtremeScen);
+%function PCA_ExtremeScenario =PCA_ExtremeScenario(year, assettype, filename,Array,numExtremeScen);
+function PCA_ExtremeScenario =PCA_ExtremeScenario(Array)
 T1=1:1:24; %Time steps
 scenario_num=size(Array);
-b_array=[];
+b_array=zeros(1003,24);
 parfor k=4:scenario_num(1)
-    b=[];
+    b=zeros(24,1);
     col = Array(k,:);
-    hold on; 
     for i=1:24 % put the asset in a array
         j=i+2;
-        b=[b;col{1,j}];
-    end
-    
-    for i=1:24
+        b(i)=col{1,j};
         b_array(k,i)=b(i);
     end    
 end
 figure(1);
-subplot(1,2,1)
-plot(T1,b_array,'Color', [0.7 0.7 0.7],'markersize',5);
-hold on;
-[c_array,I]=sort(b_array,'ascend');
-size_c_array=size(c_array);
-index=[];lowerB=[];
+subplot(1,3,1)
 bm=mean(b_array);% calculating the mean of all the scenarios
+hold on;
 PCA_ExtremeScenario=plot(T1,bm,'.-black','markersize',20);
 hold on;
-LowerBound=[];UpperBound=[];
+LowerBound=zeros(24,1);UpperBound=zeros(24,1);
 for k=1:24
     sizecolumn=sort(b_array(:,k));
-    LowerBound=[LowerBound;sizecolumn(50)];
-    UpperBound=[UpperBound;sizecolumn(950)];
+    LowerBound(k)=sizecolumn(50);
+    UpperBound(k)=sizecolumn(950);
 end
-plot(T1,LowerBound,'-black','LineWidth',2);
-hold on;
-plot(T1,UpperBound,'-black','LineWidth',2);  
+hold on
+x2 = [T1, fliplr(T1)];
+xlabel('Time (hours)'); 
+ylabel('Energy (MW)'); 
+set(gca, 'GridLineStyle', ':') %dotted grid lines
+set(gca,'FontSize',18,'LineWidth',1.5)
+
+fill(x2, [bm, fliplr(UpperBound')], 0.7 * ones(1, 3), 'linestyle', 'none', 'facealpha', 0.4);
+fill(x2, [bm, fliplr(LowerBound')], 0.7 * ones(1, 3), 'linestyle', 'none', 'facealpha', 0.4);
+
 [coeff,score]=pca(b_array);
-subplot(1,2,2);
-A=[score(:,1),score(:,2)];
+subplot(1,3,2);
 plot(score(:,1),score(:,2), '.green', 'markersize', 5);
-x=score(:,1);y=score(:,2);
+hold on;
+
+subplot(1,3,3);
+plot(T1,coeff(:,1), '-black', 'markersize', 10);
+hold on;
+plot(T1,coeff(:,2), '-blue', 'markersize', 10);
+
+x=score(:,1);y=score(:,2);x1=score(:,3);y1=score(:,4);
 j = boundary(x,y,1.0);
 %j = convhull(x,y);
 hold on;
+subplot(1,3,2);
 plot(x(j),y(j),'.b','markersize',10);
-strValues =strtrim(cellstr(num2str([j],'%d')));
+strValues =strtrim(cellstr(num2str((j),'%d')));
 text(x(j),y(j),strValues);
 hold on;
 sizej=size(j);
-
-plot(score(100,1),score(100,2), '.b', 'markersize', 20);
-
 points=0.0;
-for k=1:size(j);
+for k=1:size(j)
     m=j(k);
-    check=x(k);
-    if (check<0 & points<numExtremeScen);
+    check=x(k)+y(k);check2=x(k);
+   % if (check>0 & points<numExtremeScen);
+    if (check<-100)
+    %if(check2>160)    
         points=points+1;
-        subplot(1,2,1)
+        subplot(1,3,1)
         plot(T1,b_array(m,:),'-blue','markersize',10)
         hold on;
     end
 end
-plot(T1,b_array(100,:),'blue','LineWidth',2.0)
-points;
-
-for i=1:24
-index=[index;I(4,i)];
-lowerB=[lowerB;b_array(I(4,i),:)];
-subplot(1,2,1);
-plot(T1,b_array(I(4,i),:),'-red','markersize',10);
+points
 hold on;
-end
-[coeff,score]=pca(lowerB);
-subplot(1,2,2);
-plot(score(:,1),score(:,2), '.red', 'markersize', 20);
+plot(T1,b_array(613,:),'-red','markersize',15)
+plot(T1,b_array(2,:),'-red','markersize',15)
+plot(T1,b_array(201,:),'-red','markersize',15)
+ plot(T1,b_array(13,:),'-red','markersize',15)
+plot(T1,b_array(807,:),'-red','markersize',15)
+      
 end
