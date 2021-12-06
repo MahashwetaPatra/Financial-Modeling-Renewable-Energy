@@ -1,6 +1,7 @@
 %
 % NOTE:    Calls all the assets, and for each assets does the Kolmogorov-Smirnov test and then
-%          calculates the Histogram from the KS scores.
+%          calculates the Histogram from the KS scores. Does the analysis
+%          for both zonal and asset level
 %
 % HIST:  - 25 Oct, 2021: Created by Patra
 %          02 Nov,2021: Added the Kolmogorov-Smirnov Test
@@ -9,30 +10,20 @@
 
 tic
 clc;close all; clear all;
-IntraDayKS=[]; IntraDayKS2=[];IntraDayKS3=[]; IntraDayKS4=[];
-
-for Assetnumber=1:115 %calls all the assets from intraday 1,2,3 & 4
-    column=Assetnumber+1;
-    Array = readtable('Output/Percentiles/IntraDayNew1/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS=[IntraDayKS;h p ksstat cv];
-    
-    Array = readtable('Output/Percentiles/IntraDayNew2/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS2=[IntraDayKS2;h p ksstat cv];
-
-    Array = readtable('Output/Percentiles/IntraDayNew3/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS3=[IntraDayKS3;h p ksstat cv];
-
-    Array = readtable('Output/Percentiles/IntraDayNew4/Asset/Percentiles_Scoville_wind.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS4=[IntraDayKS4;h p ksstat cv];
-
+IntraDayKS=zeros(115,4);
+for day=1:4
+    IntraDayKS=zeros(115,4);
+    parfor Assetnumber=1:115 %calls all the assets from intraday 1,2,3 & 4
+        column=Assetnumber+1;
+        Array = readtable(strcat('Output/Percentiles/IntraDayNew',num2str(day),'/Asset/Percentiles_Scoville_wind.csv'));% calls all the assets from a folder
+        file=Array{:,column};
+        [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
+        IntraDayKS(Assetnumber,:)=[h p ksstat cv];
+    end
+    figure(4);
+    subplot(2,2,day)
+    histogram(IntraDayKS(:,3),20)
+    title(strcat('Intra Day',num2str(day)))
 end
 
 Array = readtable('Output/Percentiles/IntraDayNew1/State/Percentiles_Scoville_All.csv');% calls all the assets from a folder
@@ -326,7 +317,6 @@ plot(x_values,unifcdf(x_values,0,100),'r-')
 legend('Empirical CDF','Uniform CDF','Location','best')
 title('West')
 
-
 Array = readtable('Output/Percentiles/IntraDayNew4/Zonal/Percentiles_Scoville_Far_West.csv');% calls all the assets from a folder
 file=Array{:,2};
 figure(2)
@@ -412,33 +402,26 @@ plot(x_values,unifcdf(x_values,0,100),'r-')
 legend('Empirical CDF','Uniform CDF','Location','best')
 title('West')
 
-%han.YLabel.Visible='on';
-%ylabel(han,'Intra Day 2 & Intra Day 1');
-
-ZonalKSIntraDay1=IntraDayP(:,3)
-ZonalKSIntraDay2=IntraDayP2(:,3)
-ZonalKSIntraDay3=IntraDayP3(:,3)
-ZonalKSIntraDay4=IntraDayP4(:,3)
-
+ZonalKSIntraDay1=IntraDayP(:,3);
+ZonalKSIntraDay2=IntraDayP2(:,3);
+ZonalKSIntraDay3=IntraDayP3(:,3);
+ZonalKSIntraDay4=IntraDayP4(:,3);
+yaxis=[0;0;0;0;0];
 figure(4);
 subplot(2,2,1)
-histogram(IntraDayKS(:,3),10)
-xlim([0,0.3])
-ylim([0,50])
-title('Intra Day 1')
+hold on;
+plot(ZonalKSIntraDay1,yaxis,'.','Markersize',15)
+
 subplot(2,2,2)
-histogram(IntraDayKS2(:,3),10)
-xlim([0,0.3])
-ylim([0,50])
-title('Intra Day 2')
+hold on;
+plot(ZonalKSIntraDay2,yaxis,'.','Markersize',15)
+
 subplot(2,2,3)
-histogram(IntraDayKS3(:,3),10)
-xlim([0,0.3])
-ylim([0,50])
-title('Intra Day 3')
+hold on;
+plot(ZonalKSIntraDay3,yaxis,'.','Markersize',15)
+ 
 subplot(2,2,4)
-histogram(IntraDayKS4(:,3),10)
-xlim([0,0.3])
-ylim([0,50])
-title('Intra Day 4')
+hold on;
+plot(ZonalKSIntraDay4,yaxis,'.','Markersize',15)
+
 toc
