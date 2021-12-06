@@ -1,6 +1,7 @@
 %
 % NOTE:    Calls all the assets, and for each assets does the Kolmogorov-Smirnov test and then
-%          calculates the Histogram from the KS scores.
+%          calculates the Histogram from the KS scores. Analyze for both
+%          zonal and asset level for solar data
 %
 % HIST:  - 25 Oct, 2021: Created by Patra
 %          02 Nov,2021: Added the Kolmogorov-Smirnov Test
@@ -8,19 +9,20 @@
 %=========================================================================
 tic
 clc;close all; clear all;
-IntraDayKS=[]; IntraDayKS2=[];IntraDayKS3=[]; IntraDayKS4=[];
-
-for Assetnumber=1:36 %calls all the assets from intraday 1,2,3 & 4
-    column=Assetnumber+1;
-    Array = readtable('Output/Percentiles/IntraDayNew2Solar/Asset/Percentiles_Scoville_solar.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS2=[IntraDayKS2;h p ksstat cv];
-
-    Array = readtable('Output/Percentiles/IntraDayNew3Solar/Asset/Percentiles_Scoville_solar.csv');% calls all the assets from a folder
-    file=Array{:,column};
-    [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
-    IntraDayKS3=[IntraDayKS3;h p ksstat cv];  
+IntraDayKS=zeros(115,4);
+for day=2:3
+    IntraDayKS=zeros(115,4);
+    parfor Assetnumber=1:36 %calls all the assets from intraday 1,2,3 & 4
+        column=Assetnumber+1;
+        Array = readtable(strcat('Output/Percentiles/IntraDayNew',num2str(day),'Solar/Asset/Percentiles_Scoville_solar.csv'));% calls all the assets from a folder
+        file=Array{:,column};
+        [h,p,ksstat,cv] = kstest(file,[file unifcdf(file,0,100)]);
+        IntraDayKS(Assetnumber,:)=[h p ksstat cv];
+    end
+    figure(4);
+    subplot(1,2,day-1)
+    histogram(IntraDayKS(:,3),20)
+    title(strcat('Intra Day',num2str(day)))
 end
 
 Array = readtable('Output/Percentiles/IntraDayNew2Solar/State/Percentiles_Scoville_All.csv');% calls all the assets from a folder
@@ -282,16 +284,15 @@ title('West')
 
 ZonalKSIntraDay2=IntraDayP2(:,3)
 ZonalKSIntraDay3=IntraDayP3(:,3)
+yaxis=[0;0;0;0;0;0;0];
 
 figure(4);
 subplot(1,2,1)
-histogram(IntraDayKS2(:,3),10)
-xlim([0,0.3])
-ylim([0,20])
-title('Intra Day 2')
+hold on;
+plot(ZonalKSIntraDay2,yaxis,'.','Markersize',15)
+
 subplot(1,2,2)
-histogram(IntraDayKS3(:,3),10)
-xlim([0,0.3])
-ylim([0,20])
-title('Intra Day 3')
+hold on;
+plot(ZonalKSIntraDay3,yaxis,'.','Markersize',15)
+
 toc
