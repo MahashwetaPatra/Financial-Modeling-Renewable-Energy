@@ -1,19 +1,15 @@
 function PCA_Aggregated=PCA_Aggregated(sizeZones,ZoneName,ZoneType)
-Matrix=[];b_array=[];sum_array=0;coeff_matrix=[];
+b_array=zeros(1003,24);sum_array=0;coeff_matrix=[];
 T1=1:1:24;%Time steps
 for p=1:sizeZones
     Array = readtable(ZoneName(p).name);
-    for k=3:1000
-        a=[];b=[];
+    parfor k=3:1000
+        b=zeros(24,1);
         col = Array(k,:);
         hold on; 
         for i=1:24% put the asset in a array
             j=i+2;
-            a=[a;T1(i)];
-            b=[b;col{1,j}];
-        end
-        for i=1:24
-            a_array(k,i)=a(i);
+            b(i)=col{1,j};
             b_array(k,i)=b(i);
         end
     end

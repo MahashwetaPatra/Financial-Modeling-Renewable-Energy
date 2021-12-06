@@ -1,3 +1,8 @@
+%
+% NOTE:     investigate to what extent are 
+%           the PCA factors of individual assets similar 
+%           to the PCA of the aggregated sum
+%=========================================================================
 tic
 clc;close all; clear all;
 T1=1:1:24;%Time steps
