@@ -7,4 +7,10 @@ PCA_AnimationAssets.m is for calculating the Animation video for the PCA factors
 
 PCA_AggregatedAsset.m shows the PC1 of individual assets and PC1 of the aggregated sum of all the assets for the eight zones. The aggregated sum quite well matches with the individual assets' overall shape for both the cases (solar \& wind)
 
-IllustrationDAID.m shows that DA and intraday scenarios and forecasts. Panels (a) 2017/03/02 and (b) 2017/12/12 are for the Fluvanna-I wind asset; Panel 
+IllustrationDAID.m shows that DA and intraday scenarios and forecasts, actual for any asset and date.
+
+PCA_ExtremeScenario.m is for calculating the boundary of score phase space plot, i.e., showig the extreme scenarios 
+
+TimeSeries05Dec.m is for calculating the time series of actual , forcast and mean and 2.75-97.5% scenario band for an asset on a day.
+
+latent.m is a function that calculate the PCA factors when an array is passed as an input
