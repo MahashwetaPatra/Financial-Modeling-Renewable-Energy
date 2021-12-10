@@ -11,7 +11,7 @@ EnergyScore.m works on the energy score data. It calls energy score from all the
 EnergyScoreZonalYear.m calls energy score for all the assets from different zones and plots the I_1, I_2, I_3, I_4 plots for solar, wind.
 
 To check how good the PIT histogram works, how good it matches with the uniform distribution we check the KS score using the KSScoreValuesWind.m file. It works for the wind assets for the intra days and the DA.
-Brier score test is another way to check how good the prediction is, to measure the accuracy of probabilistic forecasts. BrierScoreValuesWind.m calculates the Brier score for the event of generating zero wind prouction. It calls all the assets, and for each assets calculates the Brier scores for the event of zero wind generation and plot the histograms for the Brier score.
+Brier score test is another way to check how good the prediction is, to measure the accuracy of probabilistic forecasts. BrierScoreValuesWind.m calculates the Brier score for the event of generating zero wind prouction. It calls all the assets, and for each assets calculates the Brier scores for the event of zero wind generation and plot the histograms for the Brier score. MaxSolarWindGeneration.m is the file that uses two function BrierScoreCheck.m and BrierScoreCheckSolar.m that generates Brier score for all the assets for wind and Solar data and with them plots histograms for intradays and DA. 
 
 **PCA analysis (for dimension reduction) and K-means algorithm (for clustering algorithm)**
 
