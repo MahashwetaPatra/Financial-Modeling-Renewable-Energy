@@ -1,5 +1,17 @@
 # Financial-Modeling-Renewable-Energy
+**Scenario assessment on intra-day scenarios**
+
 This project assesses the intraday and DA scenarios from the ORFEUS-GHS model run on the ERCOT TAMU testbed. We assess the stochastic scenarios for wind and solar assets over the 4 intra-day blocks $I_1,\ldots,I_4$ each of which includes 6 hourly datapoints and for the day ahead. Assessment metrics include PCA analysis, K-means clustering, Energy Scores, Coverage, PIT Histogram and Brier scores
+
+run_script.ipynb is the Python notebook file to run that calculates the percentile for solar, wind and load. It calls the function generate_percentiles.py and scenario_models.py. RunEnergyScore.ipynb calculates the energy scores. generate_percentiles.py is the file that generate the percentile and save them in files. generate_ES2.py is the function that is called to generate the energy scores.
+
+The notebook PITHistogramIntraDayWind.ipynb creates a variety of plots and numerical indicators of how well the scenarios cover the actuals on an hourly and daily basis for the wind data. It works with the percentile data and plots the heatmap, PIT histograms. PITHistogramIntraDaySolar.ipynb does the same for the solar data.
+
+EnergyScore.m works on the energy score data. It calls energy score from all the aggregated assets, and plots it with date for load, solar, wind, all.
+EnergyScoreZonalYear.m calls energy score for all the assets from different zones and plots the I_1, I_2, I_3, I_4 plots for solar, wind.
+
+To check how good the PIT histogram works, how good it matches with the uniform distribution we check the KS score using the KSScoreValuesWind.m file. It works for the wind assets for the intra days and the DA.
+
 
 **PCA analysis (for dimension reduction) and K-means algorithm (for clustering algorithm) **
 
@@ -15,13 +27,5 @@ PCA_ExtremeScenario.m is for calculating the boundary of score phase space plot,
 
 TimeSeries05Dec.m is for calculating the time series of actual , forcast and mean and 2.75-97.5% scenario band for an asset on a day.
 
-latent.m is a function that calculate the PCA factors when an array is passed as an input
-
-run_script.ipynb is the Python notebook file to run that calculates the percentile for solar, wind and load. It calls the function generate_percentiles.py and scenario_models.py. RunEnergyScore.ipynb calculates the energy scores. generate_percentiles.py is the file that generate the percentile and save them in files. generate_ES2.py is the function that is called to generate the energy scores.
-
-The notebook PITHistogramIntraDayWind.ipynb creates a variety of plots and numerical indicators of how well the scenarios cover the actuals on an hourly and daily basis for the wind data. It works with the percentile data and plots the heatmap, PIT histograms. PITHistogramIntraDaySolar.ipynb does the same for the solar data.
-
-EnergyScore.m works on the energy score data. It calls energy score from all the aggregated assets, and plots it with date for load, solar, wind, all.
-EnergyScoreZonalYear.m calls energy score for all the assets from different zones and plots the I_1, I_2, I_3, I_4 plots for solar, wind.
-
+latent.m is a function that calculate the PCA factors when an array is passed as an input.
 RepresentationScenario.m: Calls an asset, from a day and for that asset calculates representative scenarios using the K-means algorithm. The histogram from all scenarios and representative scenarios at different hours are compared and it matches well.
