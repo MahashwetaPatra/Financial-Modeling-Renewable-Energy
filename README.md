@@ -17,6 +17,11 @@ TimeSeries05Dec.m is for calculating the time series of actual , forcast and mea
 
 latent.m is a function that calculate the PCA factors when an array is passed as an input
 
-run_script.ipynb is the Python notebook file to run that calculates the percentile for solar, wind and load. It calls the function generate_percentiles.py and scenario_models.py. RunEnergyScore.ipynb calculates the energy scores.
+run_script.ipynb is the Python notebook file to run that calculates the percentile for solar, wind and load. It calls the function generate_percentiles.py and scenario_models.py. RunEnergyScore.ipynb calculates the energy scores. generate_percentiles.py is the file that generate the percentile and save them in files. generate_ES2.py is the function that is called to generate the energy scores.
+
+The notebook PITHistogramIntraDayWind.ipynb creates a variety of plots and numerical indicators of how well the scenarios cover the actuals on an hourly and daily basis for the wind data. It works with the percentile data and plots the heatmap, PIT histograms. PITHistogramIntraDaySolar.ipynb does the same for the solar data.
+
+EnergyScore.m works on the energy score data. It calls energy score from all the aggregated assets, and plots it with date for load, solar, wind, all.
+EnergyScoreZonalYear.m calls energy score for all the assets from different zones and plots the I_1, I_2, I_3, I_4 plots for solar, wind.
 
 RepresentationScenario.m: Calls an asset, from a day and for that asset calculates representative scenarios using the K-means algorithm. The histogram from all scenarios and representative scenarios at different hours are compared and it matches well.
