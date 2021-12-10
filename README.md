@@ -13,7 +13,7 @@ EnergyScoreZonalYear.m calls energy score for all the assets from different zone
 To check how good the PIT histogram works, how good it matches with the uniform distribution we check the KS score using the KSScoreValuesWind.m file. It works for the wind assets for the intra days and the DA.
 
 
-**PCA analysis (for dimension reduction) and K-means algorithm (for clustering algorithm) **
+**PCA analysis (for dimension reduction) and K-means algorithm (for clustering algorithm)**
 
 PCA_Assets.m is a function that does the PCA analysis. The input is the asset in Array. PCA_AllAssets3.m calls all the assets for a date, and for each assets calls the matlab function PCA_Assets.m, This is for doing the PCA for the asset and save the first four PCA factors and first four explained series in csv format for all the assets and for 365 days in a folder named Coefficient. 
 
