@@ -5,18 +5,23 @@
 %         -Added more notes to it
 %=========================================================================
 function BrierScore=BrierScoreCheck(filename,day);
-BrierScore=0.0;number=0.0;
+%BrierScore=0.0;
+number=0.0;
 score=0.0;
 datetime.setDefaultFormats('defaultdate','yyyyMMdd')
 t = datetime(2017,1,1:730);
 date=t';
-time=char(date(1));
-for k=1:730
+%time=char(date(1));
+parfor k=1:730
     year=char(date(k));
     %name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/solar/',string(filename));
-    name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/solar/',string(filename));
-    %name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',string(filename));
-    %name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/wind/',string(filename));
+    if day==4
+        name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/solar/',string(filename));
+
+    else
+        name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/solar/',string(filename));
+
+    end
     Array = readtable(name);
     for column=1:6 % For intraday block it is 6, for DA the value is 24
         c=column+2;
@@ -38,5 +43,6 @@ for k=1:730
         end
     end
 end
+number;
 BrierScore=score/number;
 end
