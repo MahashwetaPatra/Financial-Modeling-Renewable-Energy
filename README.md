@@ -1,8 +1,6 @@
 # Financial-Modeling-Renewable-Energy
 **Scenario assessment on intra-day scenarios**
 
-This project assesses the intraday and DA scenarios from the ORFEUS-GHS model run on the ERCOT TAMU testbed. We assess the stochastic scenarios for wind and solar assets over the 4 intra-day blocks $I_1,\ldots,I_4$ each of which includes 6 hourly datapoints and for the day ahead. Assessment metrics include PCA analysis, K-means clustering, Energy Scores, Coverage, PIT Histogram and Brier scores
-
 run_script.ipynb is the Python notebook file to run that calculates the percentile for solar, wind and load. It calls the function generate_percentiles.py and scenario_models.py. RunEnergyScore.ipynb calculates the energy scores. generate_percentiles.py is the file that generate the percentile and save them in files. generate_ES2.py is the function that is called to generate the energy scores.
 
 The notebook PITHistogramIntraDayWind.ipynb creates a variety of plots and numerical indicators of how well the scenarios cover the actuals on an hourly and daily basis for the wind data. It works with the percentile data and plots the heatmap, PIT histograms. PITHistogramIntraDaySolar.ipynb does the same for the solar data.
