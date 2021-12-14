@@ -29,3 +29,7 @@ TimeSeries05Dec.m is for calculating the time series of actual , forcast and mea
 
 latent.m is a function that calculate the PCA factors when an array is passed as an input.
 RepresentationScenario.m: Calls an asset, from a day and for that asset calculates representative scenarios using the K-means algorithm. The histogram from all scenarios and representative scenarios at different hours are compared and it matches well.
+
+PCA_ExtremeScenarioAsset.m shows the extreme scenario by running the function PCA_ExtremeScenario.m and PCA_ExtremeScenario4.m
+
+PCA_ExtremeScenarioAllAsset.m calls the function PCA_ExtremeScenarioWind.m and PCA_ExtremeScenarioSolar.m and check number of extreme scenarios for all assets and make distribution.
