@@ -16,7 +16,7 @@ Figure 8, 10, 11, & 12: PITHistogramIntraDaySolar.ipynb
 
 Figure 9: same as Figure 3
 
-Figure 13, 1st row: 
+Figure 13, 1st row: KSscoreDA.m and HistogramIntraDayKSTestSolar.m
 
 Figure 13, 2nd row: MaxSolarWindGeneration.m  that calls BrierScoreCheckSolar.m
 
