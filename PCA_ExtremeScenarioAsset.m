@@ -1,3 +1,8 @@
+%
+% NOTE: This is for plotting extreme scenario for a given date and asset
+%
+% HIST:  - 1 Dec, 2021: Created by Patra
+
 tic
 clc;close all;clear all;
 prompt = 'What is the date, for example 20170310? ';
