@@ -1,4 +1,5 @@
 Figure 1(a) and (b): IllustrationDAID.m
+Figure 1(c) by running IllustrationDA.m and IllustrationIDAll.m
 
 Figure 2: PITHistogramIntraDayWind.ipynb
 
