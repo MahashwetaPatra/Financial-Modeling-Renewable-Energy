@@ -21,7 +21,7 @@ PCA_AnimationAssets.m is for calculating the Animation video for the PCA factors
 
 PCA_AggregatedAsset.m shows the PC1 of individual assets and PC1 of the aggregated sum of all the assets for the eight zones. The aggregated sum quite well matches with the individual assets' overall shape for both the cases (solar \& wind)
 
-IllustrationDAID.m shows that DA and intraday scenarios and forecasts, actual for any asset and date.
+IllustrationDAID.m shows that DA and intraday scenarios and forecasts, actual for any asset and date. IllustrationDA.m and IllustrationIDAll.m shows DA and intraday scenarios and forecasts, actual for aggregated asset for a date.
 
 PCA_ExtremeScenario.m is for calculating the boundary of score phase space plot, i.e., showig the extreme scenarios 
 
