@@ -2,9 +2,10 @@
 # NOTE: This is for calculating the time series of actual , forecast and mean of all scenarios
 #       Yellow shows simulations, blue actual, red mean, green forecast
 #       Black shows the representative scenarios using K-means
-df <- read.csv("C:\\Users\\Mahashweta Patra\\Documents\\MikeLudkovski\\Aguayo_Wind.csv", header=TRUE, stringsAsFactors=FALSE)
+df <-read.csv("C:\\Users\\Mahashweta Patra\\Documents\\MikeLudkovski\\ORFEUS\\SimDat_20170101\\wind\\Aguayo_Wind.csv", header=TRUE, stringsAsFactors=FALSE)
 Simulations <- unlist(df[3,3:26])
-plot(Simulations, type = "l", col="red")
+plot(Simulations, type = "l", col="red", xlab = "Time",
+     ylab = "Mw",)
 for (x in 4:1002) {
   Simulations <- unlist(df[x,3:26])
   points(Simulations, type = "l", col="yellow")
@@ -24,3 +25,7 @@ for (x in 1:25) {
   Simulations <- unlist(km[x,1:24])
   points(Simulations, type = "l", col="black")
 }
+pZ <- prcomp(df[,3:26], tol = 0.1)
+summary(pZ) # only ~14 PCs (out of 32)
+PCs <- pZ$rotation
+print(PCs[1:24,1])
