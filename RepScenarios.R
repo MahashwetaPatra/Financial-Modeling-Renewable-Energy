@@ -1,3 +1,8 @@
+#
+# NOTE: This is for calculating the time series of actual , forecast and mean of all scenarios
+#       Yellow shows simulations, blue actual, red mean, green forecast
+#       Black shows the representative scenarios using K-means
+
 date <-readline(prompt = "Enter date: ")
 assetname<-readline(prompt = "Enter asset name: ")
 asset<-readline(prompt = "Enter asset type: ")
