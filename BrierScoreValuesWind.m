@@ -12,20 +12,20 @@ files = dir('Scovilleriskpartners/CSV/IntraDay1/SimDat_20170101/wind/*.csv');
 scorevalue=zeros(length(files),4);
 for day=1:5
     parfor i=1:length(files)
-        number=0.0;score=0.0;
+        number=0.0;score=0.0
         datetime.setDefaultFormats('defaultdate','yyyyMMdd')
-        t = datetime(2017,1,1:30);
+        t = datetime(2017,1,1:730);
         date=t';
         filename=files(i).name;
-        for k=1:30
+        for k=1:730
             year=char(date(k));
              if day==5
                  name=strcat('Scovilleriskpartners/CSV/DA/SimDat_',year,'/wind/',filename);
              
              else
-                name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',filename);
+                 name=strcat('Scovilleriskpartners/CSV/IntraDay',num2str(day),'/SimDat_',year,'/wind/',filename);
              end
-                Array = readtable(name);
+                 Array = readtable(name);
             for column=1:6 %considers all the six hours
                 c=column+2;
                 c1=Array{4:1003,c}; % considers column for each hour 
@@ -39,17 +39,17 @@ for day=1:5
                         BS=(probability-1)*(probability-1);
                     else
                         BS=(probability-0)*(probability-0);
-                    end
+                    end %end if, checking whether actual produces zero or nonzero wind
                     score=score+BS; % summing over all six hours
                     number=number+1;
-                end
-            end
-        end
+                end %end if, whether probability /frequency of zero wind generation is more than 1%
+            end %end for, summing over 6 hours
+        end %end for, summing over 2yrs
         number;
         BrierScore=score/number;
         scorevalue(i,day)=BrierScore;
-    end
-end
+    end% end for, end of all assets 
+end %end for, for all interdays and DA
 for day=1:5
     figure(1)
     subplot(1,5,day)
