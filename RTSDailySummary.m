@@ -3,7 +3,7 @@
 %          calculates distribution of generation cost, load shedding and renewable curtailment
 % HIST:  - 4 Jan, 2022: Created by Patra
 %=========================================================================
-function GenIdx=RTSDailySummary
+function [GenIdx, ExtLoad, CurIdx]=RTSDailySummary
 clc;close all; clear all;
 %% Provide with the Input
 GenerationCost = readtable('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/GenerationCostJanuary20.csv'); 
