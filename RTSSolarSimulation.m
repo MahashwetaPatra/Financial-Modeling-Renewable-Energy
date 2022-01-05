@@ -8,7 +8,7 @@
 %=========================================================================
 function RTSSolarSimulation
     Time=1:1:24;%Time steps
-    Array = readtable('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/SolarScenarios320_PV_1.csv'); 
+    Array = readtable('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/SolarScenariosAggregated.csv'); 
     SizeScenario=size(Array);
     b_array=zeros(1001,24);
     for k=2:SizeScenario(1)
