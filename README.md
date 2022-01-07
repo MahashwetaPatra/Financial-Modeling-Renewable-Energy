@@ -33,3 +33,8 @@ RepresentationScenario.m: Calls an asset, from a day and for that asset calculat
 PCA_ExtremeScenarioAsset.m shows the extreme scenario by running the function PCA_ExtremeScenario.m and PCA_ExtremeScenario4.m
 
 PCA_ExtremeScenarioAllAsset.m calls the function PCA_ExtremeScenarioWind.m and PCA_ExtremeScenarioSolar.m and check number of extreme scenarios for all assets and make distribution.
+
+**RTS Simulation**
+
+RTSPCA.m Calls all the wind/solar asset and the aggregated asset, from a day and for that assets
+ Run the core PCA analysis on RTS scenarios (to double-check that we get the same patterns as for NREL-SRP output)
