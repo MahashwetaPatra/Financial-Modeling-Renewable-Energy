@@ -38,3 +38,9 @@ PCA_ExtremeScenarioAllAsset.m calls the function PCA_ExtremeScenarioWind.m and P
 
 RTSPCA.m Calls all the wind/solar asset and the aggregated asset, from a day and for that assets
  Run the core PCA analysis on RTS scenarios (to double-check that we get the same patterns as for NREL-SRP output)
+
+The code named with RTS, Process RTS sample scenarios to understand input-output relationship between RTS scenarios and Vatic outputs: (i) total daily system costs; (ii) lost load; (iii) renewable curtailment. Compare to definitions of extreme scenarios we tried before. The big question is how can we “predict” which scenarios will be extreme per Vatic. 
+Identify the extreme scenarios (those that yield the 5% highest cost) for a couple of representative days
+Make a scatter plot between total scenario renewable generation and total costs
+Identify scenarios that lead to lost load, and those that lead to the highest curtailment. Provide interpretation for why those outcomes happen (eg very low generation, large generation drop at particular hour, etc)
+Run the core PCA analysis on RTS scenarios (to double-check that we get the same patterns as for NREL-SRP output)
