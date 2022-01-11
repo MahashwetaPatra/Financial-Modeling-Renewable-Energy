@@ -6,9 +6,9 @@
 % HIST:  - 4 Jan, 2022: Created by Patra
 %=========================================================================
 function RTSWindAggregated
-    [GenIdx, ExtLoad, CurIdx, GenCost]=RTSDailySummary;
+    [GenIdx, ExtLoad, CurIdx, GenCost, GenIdxSolar, ExtLoadSolar, CurIdxSolar, GenCostSolar]=RTSDailySummary;
     Time=1:1:24;%Time steps
-    Array = readtable('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/WindScenariosAggregated.csv');
+    Array = readtable('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/SolarScenariosAggregated.csv');
     %SolarScenarios320_PV_1.csv']); 
     SizeScenario=size(Array);
     b_array=zeros(1001,24);
@@ -27,7 +27,7 @@ function RTSWindAggregated
     subplot(1,3,1)
     plot(Time,b_array,'Color', [0.7 0.7 0.7],'markersize',5) %plot the mean of all scenarios
     hold on;
-    plot(Time,b_array(GenIdx,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
+    plot(Time,b_array(GenIdxSolar,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',10,'LineWidth',1.0)
     title('Extreme Generation Cost')
@@ -35,7 +35,7 @@ function RTSWindAggregated
     subplot(1,3,2)
     plot(Time,b_array,'Color', [0.7 0.7 0.7],'markersize',5) %plot the mean of all scenarios
     hold on;
-    plot(Time,b_array(ExtLoad,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
+    plot(Time,b_array(ExtLoadSolar,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',10,'LineWidth',1.0)
     title('Load Shedding')
@@ -43,7 +43,7 @@ function RTSWindAggregated
     subplot(1,3,3)
     plot(Time,b_array,'Color', [0.7 0.7 0.7],'markersize',5) %plot the mean of all scenarios
     hold on;
-    plot(Time,b_array(CurIdx,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
+    plot(Time,b_array(CurIdxSolar,:),'Color', [0.45 0.45 0.45],'markersize',5) %plot the mean of all scenarios
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',10,'LineWidth',1.0)
     title('Extreme Renewable curtailment')
@@ -67,7 +67,7 @@ function RTSWindAggregated
     set(gca,'FontSize',12,'LineWidth',1.0)
 
     figure()
-    plot( b_array(2:1001,1), GenCost,'.b', 'MarkerSize',5)
+    plot( b_array(2:1001,1), GenCostSolar,'.b', 'MarkerSize',5)
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',12,'LineWidth',1.0)
     xlabel('Aggregated Scenarios')

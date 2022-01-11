@@ -10,7 +10,7 @@ Time=1:1:24;%Time steps
 %files = dir('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/WindScenarios*.csv'); 
 files = dir('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/SolarScenario*.csv'); 
 l=length(files);
-for i=1:l-1 % l:l for aggregated assets %1:l-1 for all assets
+for i=l:l % l:l for aggregated assets %1:l-1 for all assets
     filename=files(i).name;
     Array = readtable(strcat('ORFEUSRTS/type-pwrset-jan20-20211229T210546Z-001/type-pwrset-jan20/',filename)); 
     SizeScenario=size(Array);
@@ -24,29 +24,35 @@ for i=1:l-1 % l:l for aggregated assets %1:l-1 for all assets
             b_array(k,i)=b(i);
         end
     end
-    [coeff]=pca(b_array);
+    [coeff,score]=pca(b_array);
     CoeffMatrix=[coeff(:,1);coeff(:,2);coeff(:,3);coeff(:,4)];
     size(CoeffMatrix);
     figure(1)
     subplot(1,3,1) 
-    plot(Time,coeff(:,1), '-b', 'MarkerSize',5)              
-    %plot(Time,coeff(:,1), '-black', 'LineWidth',1.2)              
+    %plot(Time,coeff(:,1), '-b', 'MarkerSize',5)              
+    plot(Time,coeff(:,1), '-black', 'LineWidth',1.2)              
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',12,'LineWidth',1.0)
     hold on;
 
     subplot(1,3,2)
-    plot(Time,coeff(:,2), '-b', 'MarkerSize',5) 
-    %plot(Time,coeff(:,2),'-black', 'LineWidth',1.2)
+    %plot(Time,coeff(:,2), '-b', 'MarkerSize',5) 
+    plot(Time,coeff(:,2),'-black', 'LineWidth',1.2)
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',12,'LineWidth',1.0)
     hold on;
 
     subplot(1,3,3)
-    plot(Time,coeff(:,3), '-b', 'MarkerSize',5) 
-    %plot(Time,coeff(:,3),'-black', 'LineWidth',1.2)
+    %plot(Time,coeff(:,3), '-b', 'MarkerSize',5) 
+    plot(Time,coeff(:,3),'-black', 'LineWidth',1.2)
     set(gca, 'GridLineStyle', ':') %dotted grid lines
     set(gca,'FontSize',12,'LineWidth',1.0)
-    hold on; 
+    hold on;
+
+    figure(2)
+    plot(score(:,1),score(:,2),'.black', 'LineWidth',1.2)
+    set(gca, 'GridLineStyle', ':') %dotted grid lines
+    set(gca,'FontSize',12,'LineWidth',1.0)
+    hold on;
 end
 toc
