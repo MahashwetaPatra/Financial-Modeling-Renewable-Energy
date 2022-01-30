@@ -14,19 +14,10 @@ from matplotlib.gridspec import GridSpec
 from numpy import mean
 import numpy as np
 import math
-def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, RenewableCurtailmentAll, LoadSheddingAll, time):
+def GenCostIntegrationScen2( DifferenceLoadWindSolar, GenerationCostAll, RenewableCurtailmentAll, LoadSheddingAll, time):
     Thresold=mean(DifferenceLoadWindSolar)
-    fig = plt.figure(figsize=(15,3))
-    ax = fig.add_subplot(1,2,1)
-    ax.tick_params(labelsize=15)
-    ax.set_ylabel("Wind Scenarios and Mean",fontsize=15)
-    plt.plot(DifferenceLoadWindSolar.T,'gray', label='Difference', lw=0.5)
-    plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
-
+    
     index=[]
-    ax = fig.add_subplot(1,2,2)
-    ax.tick_params(labelsize=15)
-    ax.set_ylabel("Mean and Ext scenario",fontsize=15)
     for k in range(0,1000):
         ScenArray=[]
         for i in range(0,24):
@@ -37,11 +28,11 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, Renewabl
         for t in range(0,24):
             CheckArray.append(check[time[t]])
         if(all(x > 0 for x in CheckArray)):
-            plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
+            #plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
             index.append(k)
-    plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
+    #plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
     print("The indices of the scenarios which are always above the mean of the scenarios",index)
-    plt.show()
+    #plt.show()
     GenCostSortedAll=[]
     LoadShedSortedAll=[]
     CurtailSortedAll=[]
@@ -56,24 +47,24 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, Renewabl
     sort_index_curAll = np.argsort(CurtailSortedAll)
     #print("Scenario indices that causes highest 5% renewable curtailment:", sort_index_curAll[950:1000])
 
-    fig = plt.figure(figsize=(15,3))
-    ax = fig.add_subplot(1,3,1)
+    #fig = plt.figure(figsize=(15,3))
+    #ax = fig.add_subplot(1,3,1)
     for k in sort_indexGenCostAll[950:1000]:
         ScenArray=[]
         for i in range(0,24):
             scen=DifferenceLoadWindSolar[time[i]][k]
             ScenArray.append(scen)
-        plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
-    plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
+        #plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
+    #plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
 
-    ax = fig.add_subplot(1,3,2)
+    #ax = fig.add_subplot(1,3,2)
     for k in sort_index_curAll[950:1000]:
         ScenArray=[]
         for i in range(0,24):
             scen=DifferenceLoadWindSolar[time[i]][k]
             ScenArray.append(scen)
-        plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
-    plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
+        #plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
+    #plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
 
     LoadShedSortedAll=[]
     for i in range(0,1000):
@@ -81,14 +72,14 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, Renewabl
         LoadShedSortedAll.append(a)
     LoadShedSortedAll=np.nonzero(LoadShedSortedAll)
 
-    ax = fig.add_subplot(1,3,3)
+    #ax = fig.add_subplot(1,3,3)
     for k in LoadShedSortedAll:
         ScenArray=[]
         for i in range(0,24):
             scen=DifferenceLoadWindSolar[time[i]][k]
             ScenArray.append(scen)
-        plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
-    plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
+        #plt.plot(time,ScenArray,'gray', label='Scenario', lw=0.5)
+    #plt.plot(Thresold.T,'r', label='Average Difference', lw=2)
 
     ThresoldCompArray=[]
     for i in range(0,24):
@@ -111,7 +102,7 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, Renewabl
     sum(i > SumThresold for i in IntegrationScen)
 
     #fig = plt.figure(figsize=(5,4))
-    ax.tick_params(labelsize=15)
+    #ax.tick_params(labelsize=15)
     IntegrationScen=[]
     ExtScenIdx=[]
     for k in sort_indexGenCostAll[0:1000]:
@@ -131,7 +122,7 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, GenerationCostAll, Renewabl
     for i in ExtScenIdx:
         HighGenCost.append(GenCostSortedAll[i])
     #print("The higher generation cost are:", HighGenCost)
-    fig = plt.figure(figsize=(8,5))
+    fig = plt.figure(figsize=(6,5))
     gs = GridSpec(6, 6)
     ax_scatter = fig.add_subplot(gs[0:6, 0:6])
     ax_hist_x = fig.add_subplot(gs[0,0:6])
