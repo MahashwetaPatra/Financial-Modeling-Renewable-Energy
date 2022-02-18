@@ -44,3 +44,8 @@ Identify the extreme scenarios (those that yield the 5% highest cost) for a coup
 Make a scatter plot between total scenario renewable generation and total costs
 Identify scenarios that lead to lost load, and those that lead to the highest curtailment. Provide interpretation for why those outcomes happen (eg very low generation, large generation drop at particular hour, etc)
 Run the core PCA analysis on RTS scenarios (to double-check that we get the same patterns as for NREL-SRP output)
+
+RTSDailySummaryFunction.m  is a function used to calculate the vatic output for different days.
+RTSPCAWind.m analyze the PCA components of the aggregated wind assets and calls the function RTSDailySummaryFunction.m and establish the relationship between the PC components with the vatic output. Low PC components generates high generation cost and Load shed.
+RTSPCANetLoad.m does the same analysis as RTSPCAWind.m for NetLoad. High PC components generates high generation cost and Load shed.
+RTSRepresentativeScenario.m calculates the representattive scenarios using kmeans+knnsearch algorithm directly on 24 dimensioanl system and on the PCA components. It works on the Wind scenarios.
