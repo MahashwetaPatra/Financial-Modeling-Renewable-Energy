@@ -90,8 +90,8 @@ for i=1:1 % l:l for aggregated assets %1:l-1 for all assets
     figure(1)
     subplot(1,3,2)
     hold on;
-    LoadShedExt=LoadShed(indexPC3(950:1000));
-    %LoadShedExt=LoadShed(index(1:50));
+    %LoadShedExt=LoadShed(indexPC3(950:1000));
+    LoadShedExt=LoadShed(index(1:50));
     histogram(LoadShedExt,15)
     ln=find(LoadShedExt>0);
     l2=length(ln);
