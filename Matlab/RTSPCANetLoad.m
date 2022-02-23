@@ -65,7 +65,7 @@ plot(scoreN(:,1),scoreN(:,3),'.blue', 'markersize',15)
 hold on;
 x=score(:,1);y=score(:,2);z=score(:,3);%x1=score(:,3);y1=score(:,4);
 j = boundary(x,y,1.0);
-size(j)
+size(j);
 %j = convhull(x,y);
 hold on;
 plot(x(j),y(j),'.red','markersize',10);
@@ -84,7 +84,7 @@ subplot(1,2,1)
 scatter(x,GenCost)
 
 subplot(1,2,2)
-scatter(z,LoadShed)
+scatter(x,LoadShed)
 Ext2=[];
 [ExtPC, index]=sort(x);
 Ext2=index(950:1000);
@@ -92,18 +92,26 @@ Ext2=index(950:1000);
 sizeExt2=size(Ext2);
 A=GenCost(index(950:1000));
 B=MaxGen(950:1000);
-common=length(intersect(A,B))
+PGenCost=length(intersect(A,B))/50
+
+A=LoadShed(index(950:1000));
+[MaxLoad, ~]=sort(LoadShed);
+B=MaxLoad(950:1000);
+PLoadShed=length(intersect(A,B))/50
+
 figure(1)
 subplot(1,3,1)
 hold on;
-histogram(GenCost(Ext2))
+h=histogram(GenCost(Ext2))
+h.BinWidth = 50000;
 
 figure(1)
 subplot(1,3,2)
 hold on;
-LoadShedExt=LoadShed(indexPC3(950:1000));
-%LoadShedExt=LoadShed(index(950:1000));
-histogram(LoadShedExt,15)
+%LoadShedExt=LoadShed(indexPC3(950:1000));
+LoadShedExt=LoadShed(index(950:1000));
+h=histogram(LoadShedExt)
+h.BinWidth = 200;
 ln=find(LoadShedExt>0);
 l2=length(ln);
 commonLoadShed=l2/50
@@ -112,6 +120,6 @@ subplot(1,3,3)
 hold on;
 histogram(Curtailment(Ext2))
 
-avggencost=mean(GenCost)
-avgcurt=mean(Curtailment)
+avggencost=mean(GenCost);
+avgcurt=mean(Curtailment);
 toc

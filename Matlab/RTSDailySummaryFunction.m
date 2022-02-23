@@ -8,7 +8,8 @@ VaticOutput = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\Processe
 figure(1)
 subplot(1,3,1)
 GenCost=VaticOutput{:,2};
-histogram(GenCost,15)
+h=histogram(GenCost,15)
+h.BinWidth = 50000;
 set(gca, 'GridLineStyle', ':') %dotted grid lines
 set(gca,'FontSize',18,'LineWidth',1.5)
 [MaxGen, Idx]=sort(GenCost);
@@ -17,7 +18,8 @@ GenIdx=Idx(950:1000);
 %histogram(MaxGen(950:1000))
 
 subplot(1,3,2)
-histogram(VaticOutput{:,3},15)
+h=histogram(VaticOutput{:,3})
+h.BinWidth = 100;
 set(gca, 'GridLineStyle', ':') %dotted grid lines
 set(gca,'FontSize',18,'LineWidth',1.75)
 LoadShed=VaticOutput{:,3};

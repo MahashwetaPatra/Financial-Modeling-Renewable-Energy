@@ -72,7 +72,7 @@ for i=1:1 % l:l for aggregated assets %1:l-1 for all assets
     scatter(x,GenCost)
     
     subplot(1,2,2)
-    scatter(z,LoadShed)
+    scatter(x,LoadShed)
 
     Ext2=[];
     [ExtPC, index]=sort(x);
@@ -81,18 +81,25 @@ for i=1:1 % l:l for aggregated assets %1:l-1 for all assets
     sizeExt2=size(Ext2)
     A=GenCost(index(1:50));
     B=MaxGen(950:1000);
-    common=length(intersect(A,B))
+    PGenCost=length(intersect(A,B))/50
+    
+    A=LoadShed(indexPC3(1:50));
+    [MaxLoad, ~]=sort(LoadShed);
+    B=MaxLoad(950:1000);
+    PLoadShed=length(intersect(A,B))/50
+
     figure(1)
     subplot(1,3,1)
     hold on;
-    histogram(GenCost(Ext2),15)
-    
+    h=histogram(GenCost(Ext2),15)
+    h.BinWidth = 50000;
     figure(1)
     subplot(1,3,2)
     hold on;
-    %LoadShedExt=LoadShed(indexPC3(950:1000));
+    %LoadShedExt=LoadShed(indexPC3(1:50));
     LoadShedExt=LoadShed(index(1:50));
-    histogram(LoadShedExt,15)
+    h=histogram(LoadShedExt)
+    h.BinWidth = 100;
     ln=find(LoadShedExt>0);
     l2=length(ln);
     commonLoadShed=l2/50

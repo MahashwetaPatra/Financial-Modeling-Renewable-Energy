@@ -1,35 +1,51 @@
 %
-% NOTE:    Choose the representative scenarios (i) using Kmean and knnsearch algorithm on 24 dimensional system,
-%          (ii) using PCA analysis and Kmeans algorithm, knnsearch algorithm 
-%          Then we compare the distribution of the generation cost with the generation cost distribution
-%          The aggregated wind asset from RTS data is considered for a day
-%          
-% HIST:  - 18 Feb, 2021: Created by Patra
+% NOTE:    Calls an asset, from a day and for that assets
+%          calculates representative scenarios. The histogram from all scenarios 
+%          and representative scenarios at different hours are compared and it matches well
+% HIST:  - 12 Sep, 2021: Created by Patra
+%          17th sep cleared and Added more notes to it
+%          9th dec: the histogram from all scenarios and representative scenarios 
+%          at different hours are compared and it matches well
 %=========================================================================
 tic
 clc;close all; clear all;
 %% Provide with the Input
 RepScenario = input('Number of representative scenarios, e.g 100: ');
 hours = input('At what hour we want to check the histogram nature? for example 10?: ');
-Month=input('Month name:','s') 
+Month=input('Month name:','s') ;
 [GenIdx, ExtLoad, CurIdx, GenCost, LoadShed, Curtailment,MaxGen]=RTSDailySummaryFunction;
+
 %%get the data in array for particular asset and date
 T=1:1:24;%Time steps
-Array = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\WindScenariosAggregated.csv")); 
-SizeScenario=size(Array);
-b_array=zeros(1000,24);
+Array1 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\LoadScenariosAggregated.csv")); 
+Array2 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\WindScenariosAggregated.csv")); 
+Array3 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\SolarScenariosAggregated.csv")); 
+SizeScenario=size(Array1);
+
+b_array1=zeros(1000,24);
+b_array2=zeros(1000,24);
+b_array3=zeros(1000,24);
+
 for k=2:SizeScenario(1)
-    b=zeros(24,1);
-    col = Array(k,:);
-    hold on; 
+    b1=zeros(24,1);
+    col1 = Array1(k,:);
+    b2=zeros(24,1);
+    col2 = Array2(k,:);
+    b3=zeros(24,1);
+    col3 = Array3(k,:);
     for i=1:24% put the asset in a array
         j=i;
-        b(i)=col{1,j};
-        b_array(k,i)=b(i);
+        b1(i)=col1{1,j};
+        b_array1(k,i)=b1(i);
+        b2(i)=col2{1,j};
+        b_array2(k,i)=b2(i);
+        b3(i)=col3{1,j};
+        b_array3(k,i)=b3(i);
     end
 end
+b_array=b_array1-b_array2-b_array3;
 %% plots the scenarios
-figure();
+figure(1);
 subplot(2,2,1)
 plot(T,b_array,'Color', [0.7 0.7 0.7],'markersize',5) %plot the mean of all scenarios
 set(gca, 'GridLineStyle', ':') %dotted grid lines
@@ -38,7 +54,7 @@ set(gca,'FontSize',18,'LineWidth',1.5)
 %%uses the k-means algorithm
 [idx, C] = kmeans(b_array,RepScenario);
 [mIdx,mD] = knnsearch(b_array,C);
-sizex=size(mIdx)
+sizex=idx
 %%calculates the PCA factors
 [coefficient,score]=pca(b_array);
 %%plots the extreme scenarios
@@ -49,7 +65,6 @@ set(gca,'FontSize',18,'LineWidth',1.5)
 
 %% calculates the PCA on K-means
 [coeffN,scoreN]=pca(C);
-
 subplot(2,2,3)
 plot(score(:,1),score(:,2),'.b','markersize',5)%plotting the coefficient1
 set(gca, 'GridLineStyle', ':') %dotted grid lines
@@ -59,9 +74,22 @@ x= [score(:,1), score(:,2)];%size(x)
 [nIdx,nD] = knnsearch(x,C);
 
 subplot(2,2,4)
-plot(score(:,1),score(:,2),'.blue','MarkerSize',15);
+plot(C(:,1),C(:,2),'.blue','MarkerSize',15);
 hold on;
-plot(score(nIdx,1),score(nIdx,2),'.black','markersize',15)%plotting the coefficient1
+plot(scoreN(:,1),scoreN(:,2),'.black','markersize',15)%plotting the coefficient1
+set(gca, 'GridLineStyle', ':') %dotted grid lines
+set(gca,'FontSize',18,'LineWidth',1.5)
+
+figure()%%plots the two histograms
+subplot(1,2,1)
+histogram(b_array(:,hours),10)
+%xlim([0 20])
+set(gca, 'GridLineStyle', ':') %dotted grid lines
+set(gca,'FontSize',18,'LineWidth',1.5)
+
+subplot(1,2,2)
+histogram(b_array(mIdx,hours),10)
+%xlim([0 20])
 set(gca, 'GridLineStyle', ':') %dotted grid lines
 set(gca,'FontSize',18,'LineWidth',1.5)
 
@@ -73,7 +101,7 @@ cdfplot(GenCost(1:50))
 cdfplot(GenCost(mIdx))
 cdfplot(GenCost(nIdx))
 set(gca,'FontSize',10,'LineWidth',1.0)
-legend('GenCost','First50','Kmeans','PCA+Kmeans')
+legend('GenCost','First50','Kmeans','PCA+Kmeans','Location','southeast')
 [h1 p1 k1]=kstest2(GenCost, GenCost(1:50));
 [h2 p2 k2]=kstest2(GenCost, GenCost(mIdx));
 [h3 p3 k3]=kstest2(GenCost, GenCost(nIdx));
