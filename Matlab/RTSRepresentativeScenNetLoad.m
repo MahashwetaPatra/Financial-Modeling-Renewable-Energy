@@ -13,7 +13,7 @@ clc;close all; clear all;
 RepScenario = input('Number of representative scenarios, e.g 100: ');
 hours = input('At what hour we want to check the histogram nature? for example 10?: ');
 Month=input('Month name:','s') ;
-[GenIdx, ExtLoad, CurIdx, GenCost, LoadShed, Curtailment,MaxGen]=RTSDailySummaryFunction;
+[GenIdx, ExtLoad, CurIdx, GenCost, LoadShed, Curtailment,MaxGen]=RTSDailySummaryFunction(Month);
 
 %%get the data in array for particular asset and date
 T=1:1:24;%Time steps
@@ -26,7 +26,7 @@ b_array1=zeros(1000,24);
 b_array2=zeros(1000,24);
 b_array3=zeros(1000,24);
 
-for k=2:SizeScenario(1)
+for k=1:SizeScenario(1)
     b1=zeros(24,1);
     col1 = Array1(k,:);
     b2=zeros(24,1);
@@ -52,9 +52,10 @@ set(gca, 'GridLineStyle', ':') %dotted grid lines
 set(gca,'FontSize',18,'LineWidth',1.5)
 
 %%uses the k-means algorithm
-[idx, C] = kmeans(b_array,RepScenario);
-[mIdx,mD] = knnsearch(b_array,C);
-sizex=idx
+xinit=b_array(1:50,:);
+[idx, C] = kmeans(b_array,RepScenario,'MaxIter',20000,'Start',xinit);
+[mIdx,mD] = knnsearch(b_array,C,'K',1);
+sizex=idx;
 %%calculates the PCA factors
 [coefficient,score]=pca(b_array);
 %%plots the extreme scenarios
@@ -69,9 +70,11 @@ subplot(2,2,3)
 plot(score(:,1),score(:,2),'.b','markersize',5)%plotting the coefficient1
 set(gca, 'GridLineStyle', ':') %dotted grid lines
 set(gca,'FontSize',18,'LineWidth',1.5)
-x= [score(:,1), score(:,2)];%size(x)
-[idx, C] = kmeans(x,RepScenario);
-[nIdx,nD] = knnsearch(x,C);
+x= [score(:,1), score(:,2), score(:,3),score(:,4)];%size(x)
+xinit=[score(1:RepScenario,1), score(1:RepScenario,2), score(1:RepScenario,3), score(1:RepScenario,4)];
+%size(xinit)
+[idx, C] = kmeans(x,RepScenario,'MaxIter',20000, 'Start',xinit);
+[nIdx,nD] = knnsearch(x,C,'K',1);
 
 subplot(2,2,4)
 plot(C(:,1),C(:,2),'.blue','MarkerSize',15);
@@ -97,13 +100,23 @@ set(gca,'FontSize',18,'LineWidth',1.5)
 figure()
 cdfplot(GenCost)
 hold on;
-cdfplot(GenCost(1:50))
+cdfplot(GenCost(1:RepScenario))
 cdfplot(GenCost(mIdx))
 cdfplot(GenCost(nIdx))
 set(gca,'FontSize',10,'LineWidth',1.0)
 legend('GenCost','First50','Kmeans','PCA+Kmeans','Location','southeast')
-[h1 p1 k1]=kstest2(GenCost, GenCost(1:50));
-[h2 p2 k2]=kstest2(GenCost, GenCost(mIdx));
-[h3 p3 k3]=kstest2(GenCost, GenCost(nIdx));
-[k1 k2 k3]
+[h1, p1, k1]=kstest2(GenCost, GenCost(1:RepScenario));
+[h2, p2, k2]=kstest2(GenCost, GenCost(mIdx));
+[h3, p3, k3]=kstest2(GenCost, GenCost(nIdx));
+[k1, k2, k3]
+
+S=sum(b_array,2);
+figure()
+plot(S,GenCost,'.blue','MarkerSize',10);
+hold on;
+plot(S(mIdx),GenCost(mIdx),'.red','MarkerSize',10);
+hold on;
+plot(S(nIdx),GenCost(nIdx),'.green','MarkerSize',10);
+xlabel('Net Load Gwh')
+ylabel('Generation cost')
 toc
