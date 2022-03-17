@@ -104,11 +104,11 @@ cdfplot(GenCost(1:RepScenario))
 cdfplot(GenCost(mIdx))
 cdfplot(GenCost(nIdx))
 set(gca,'FontSize',10,'LineWidth',1.0)
-legend('GenCost','First50','Kmeans','PCA+Kmeans','Location','southeast')
 [h1, p1, k1]=kstest2(GenCost, GenCost(1:RepScenario));
 [h2, p2, k2]=kstest2(GenCost, GenCost(mIdx));
 [h3, p3, k3]=kstest2(GenCost, GenCost(nIdx));
 [k1, k2, k3]
+legend('GenCost',strcat('Subsampling,','K-S score: ',num2str(k1)),strcat('K-means,','K-S score: ',num2str(k2)),strcat('PCA+Kmeans,','K-S score: ',num2str(k3)),'Location','southeast')
 
 S=sum(b_array,2);
 figure()
