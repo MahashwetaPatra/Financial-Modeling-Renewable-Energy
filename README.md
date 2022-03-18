@@ -50,7 +50,7 @@ RTSPCAWind.m analyze the PCA components of the aggregated wind assets and calls 
 RTSPCANetLoad.m does the same analysis as RTSPCAWind.m for NetLoad. High PC components generates high generation cost and Load shed.
 RTSRepresentativeScenario.m calculates the representattive scenarios using kmeans+knnsearch algorithm directly on 24 dimensioanl system and on the PCA components. It works on the Wind scenarios.
 
-## Task: capture distribution of SCED generation costs using just \bred{50} rather than 1000 scenarios
+## Task: capture distribution of SCED generation costs using just 50 rather than 1000 scenarios
 ### Folder name: RepresentativeScenario ###
-Run InputFile.m file to get the K-S score values for all dates for all three algorithms. \item Naive baseline \bred{$k_1$}: random subsampling of scenarios. $k_2$: K-means directly on the 24-dim hourly scenarios of net load. $k_3$: PCA on the 24-dim net load scenarios, then K-means on the first four factor loadings.  The second alternative ($k_3$) works better. Assess subsampling performance using Kolmogorov-Smirnov statistic (lower is better) relative to the full cost distribution
+Run InputFile.m file to get the K-S score values for all dates for all three algorithms. \item Naive baseline $k_1$: random subsampling of scenarios. $k_2$: K-means directly on the 24-dim hourly scenarios of net load. $k_3$: PCA on the 24-dim net load scenarios, then K-means on the first four factor loadings.  The second alternative ($k_3$) works better. Assess subsampling performance using Kolmogorov-Smirnov statistic (lower is better) relative to the full cost distribution
 
