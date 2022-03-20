@@ -2,10 +2,15 @@
 % NOTE:    Calls an asset, from a day and for that assets
 %          calculates representative scenarios. The histogram from all scenarios 
 %          and representative scenarios at different hours are compared and it matches well
-% HIST:  - 12 Sep, 2021: Created by Patra
-%          17th sep cleared and Added more notes to it
-%          9th dec: the histogram from all scenarios and representative scenarios 
-%          at different hours are compared and it matches well
+% HIST:  - 20 Mar, 2022: Created by Patra
+%          Task: capture distribution of SCED generation costs using just 50 rather than 1000 scenarios
+%          Run InputFile.m file to get the K-S score values for all dates for all three algorithms.
+%          Naive baseline $k_1$: random subsampling of scenarios. 
+%          $k_2$: K-means directly on the 24-dim hourly scenarios of net load. 
+%          $k_3$: PCA on the 24-dim net load scenarios, then K-means on the first four factor loadings. 
+%          The second alternative ($k_3$) works better. 
+%          Assess subsampling performance using Kolmogorov-Smirnov statistic (lower is better) relative to the full cost distribution
+
 %=========================================================================
 
 function RTSRepresentativeScenNetLoad=RTSRepresentativeScenNetLoad(FileDir, RepScenario, PF, hours, Month)
