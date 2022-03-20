@@ -2,7 +2,7 @@
 % NOTE:    Run the core PCA analysis on RTS Net Load scenarios
 %          From the high PC1 component, vatic output, i.e. high generation cost,
 %          Load shedding are predicted
-% HIST:  - 8 Feb, 2022: Created by Patra
+% HIST:  - 20 Mar, 2022: Created by Patra
 %=========================================================================  
 function Probability=RTSPCANetLoad(FileDir, RepScenario, Month)
 Time=1:1:24;% Time steps
