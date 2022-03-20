@@ -8,7 +8,7 @@
 %          at different hours are compared and it matches well
 %=========================================================================
 
-function RTSRepresentativeScenNetLoad=RTSRepresentativeScenNetLoad(RepScenario, hours, Month)
+function RTSRepresentativeScenNetLoad=RTSRepresentativeScenNetLoad(FileDir, RepScenario, PF, hours, Month)
 [GenIdx, ExtLoad, CurIdx, GenCost, LoadShed, Curtailment,MaxGen]=RTSDailySummaryFunction(Month);
 
 %% Plot the distribution of the vatic output
@@ -16,9 +16,9 @@ function RTSRepresentativeScenNetLoad=RTSRepresentativeScenNetLoad(RepScenario, 
 
 %%get the data in array for particular asset and date
 T=1:1:24;%Time steps
-Array1 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\LoadScenariosAggregated.csv")); 
-Array2 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\WindScenariosAggregated.csv")); 
-Array3 = readtable(strcat("C:\\Users\\Mahashweta Patra\\Downloads\\ProcessedData\\ProcessedData",Month,"\\SolarScenariosAggregated.csv")); 
+Array1 = readtable(strcat(FileDir,Month,"\\LoadScenariosAggregated.csv"), 'VariableNamingRule','preserve'); 
+Array2 = readtable(strcat(FileDir,Month,"\\WindScenariosAggregated.csv"), 'VariableNamingRule','preserve'); 
+Array3 = readtable(strcat(FileDir,Month,"\\SolarScenariosAggregated.csv"), 'VariableNamingRule','preserve'); 
 SizeScenario=size(Array1);
 
 b_array1=zeros(1000,24);
@@ -47,7 +47,7 @@ b_array=b_array1-b_array2-b_array3;
 %Scenarios=PlotScenarios(T, b_array)
 
 %% uses the k-means algorithm
-xinit=b_array(1:50,:); % initialization for the K-means algorithm
+xinit=b_array(1:RepScenario,:); % initialization for the K-means algorithm
 [index, Centriod] = kmeans(b_array,RepScenario,'MaxIter',20000,'Start',xinit);
 [KmeansIndex,~] = knnsearch(b_array,Centriod,'K',1);
 
@@ -55,13 +55,22 @@ xinit=b_array(1:50,:); % initialization for the K-means algorithm
 [coefficient,score]=pca(b_array);
 
 %% calculates the K-means on the PCA four factors
-x= [score(:,1), score(:,2), score(:,3),score(:,4)];%size(x)
-xinit=[score(1:RepScenario,1), score(1:RepScenario,2), score(1:RepScenario,3), score(1:RepScenario,4)];
+x=[];xinit=[];
+for i=1:PF
+x= [x, score(:,i)];%, score(:,2), score(:,3),score(:,4)];%size(x)
+xinit=[xinit, score(1:RepScenario,i)];%, score(1:RepScenario,2), score(1:RepScenario,3), score(1:RepScenario,4)];
+end
 [~, CentriodPCA] = kmeans(x,RepScenario,'MaxIter',20000, 'Start',xinit);
 [PCAKmeansIndex,~] = knnsearch(x,CentriodPCA,'K',1);
 
 %% Plots the distribution of generation cost for representative scenarios
-[CdfPlot, KStest]=CDFPlot(GenCost, RepScenario, KmeansIndex, PCAKmeansIndex);
+%CDFPlot(GenCost, RepScenario, KmeansIndex, PCAKmeansIndex);
+[~, ~, k1]=kstest2(GenCost, GenCost(1:RepScenario));
+[~, ~, k2]=kstest2(GenCost, GenCost(KmeansIndex));
+[~, ~, k3]=kstest2(GenCost, GenCost(PCAKmeansIndex));
+%legend('GenCost',strcat('Subsampling,','K-S score: ',num2str(k1)),strcat('K-means,','K-S score: ',num2str(k2)),strcat('PCA+Kmeans,','K-S score: ',num2str(k3)),'Location','southeast')
+KStest=[k1, k2, k3];
+
 RTSRepresentativeScenNetLoad=KStest;
 %% Net load vs Gen Cost
 %ScatterPlot=ScatterPlot(b_array, GenCost, KmeansIndex, PCAKmeansIndex);
