@@ -6,7 +6,6 @@
 import pandas as pd
 import bz2
 import dill as pickle
-import pandas as pd
 import csv
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
@@ -116,7 +115,7 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, Thresold, GenerationCostAll
     #print(ThresoldCompArray)
 
     SumThresold=np.sum(ThresoldCompArray)
-    print("Daily production GWh for the mean,",SumThresold)
+    #print("Daily production GWh for the mean,",SumThresold)
     IntegrationScen=[]
     for k in sort_indexGenCostAll[950:1000]:
         ScenArray=[]
@@ -168,14 +167,15 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, Thresold, GenerationCostAll
         #lowInt =  IntegrationScen < genThresh
         #sns.regplot(IntegrationScen[lowInt],GenerationCostAll[lowInt],color='red')
         ax_scatter.scatter(IntegrationScen[lowInt],GenerationCostAll[lowInt],s=8,color='red')
-        ax_scatter.set_xticklabels(ax_scatter.get_xticks(), rotation = 90, fontsize=10)
+        #ax_scatter.set_xticklabels(ax_scatter.get_xticks(), rotation = 90, fontsize=10)
         ax_scatter.set_xlabel("Daily Production GWh",fontsize=13)
-        ax_scatter.set_ylabel("Daily LoadSheddingAll",fontsize=13)
+        ax_scatter.set_ylabel("Daily GenerationCost",fontsize=13)
         #sns.regplot(y=np.quantile(GenerationCostAll,0.95), color='blue')
         ax_scatter.axhline(y=np.quantile(GenerationCostAll,0.95),linewidth=1.0, color='blue')
         check=np.quantile(GenerationCostAll,0.95)
-        print('check',check)
-        print('Probability/2',(GenerationCostAll[lowInt] > check).sum())
+        #print('check',check)
+        probability=2*((GenerationCostAll[lowInt] > check).sum())
+        #print('Probability',probability)
         ax_hist_x.hist(IntegrationScen,bins=20,alpha=0.4)
         ax_hist_x.axis('off')
         ax_hist_x.invert_yaxis()
@@ -183,7 +183,7 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, Thresold, GenerationCostAll
         ax_hist_y.axis('off')
         ax_hist_y.invert_xaxis()
     
-    return HighGenCost, IntegrationScen, ax_scatter
+    return HighGenCost, IntegrationScen, ax_scatter, probability
 
 
 # In[ ]:
