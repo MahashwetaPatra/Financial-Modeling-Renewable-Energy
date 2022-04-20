@@ -192,3 +192,43 @@ def PlotingVaticOutputExtreme(GenerationCostAll, LoadSheddingAll, RenewableCurta
     correlationship=np.corrcoef(GenerationCostAll, ReserveShortfallAll, rowvar=False)
     print('correlation coefficient between generation cost and reserve short fall',correlationship[0][1])
 
+def PlotingVaticOutputRTS(GenerationCostAll, LoadSheddingAll, RenewableCurtailmentAll, date):
+    #GenerationCostAll=VaticOutput['GenerationCostAll']
+    #LoadSheddingAll=VaticOutput['LoadSheddingAll']
+    #RenewableCurtailmentAll=VaticOutput['RenewableCurtailmentAll']
+    
+    fig = plt.figure(figsize=(15,3))
+    ax = fig.add_subplot(1,3,1)
+    ax.set_ylabel("Generation Cost-"+date,fontsize=15)
+    ax.hist(GenerationCostAll, bins=20, color='lightblue',alpha=0.5)
+    #plt.xlim(0, 300000)
+    plt.locator_params(axis="x", nbins=4)
+    plt.grid(linewidth=0.25)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=12)
+
+    ax = fig.add_subplot(1,3,2)
+    ax.set_ylabel("Load Shedding-"+date,fontsize=15)
+    ax.hist(LoadSheddingAll, bins=25, color='lightblue',alpha=0.5)
+    plt.locator_params(axis="x", nbins=4)
+    plt.ylim(0,100)
+    plt.grid(linewidth=0.25)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=12)
+
+    ax = fig.add_subplot(1,3,3)
+    ax.set_ylabel("Ren. Curtailment-"+date,fontsize=15)
+    ax.hist(RenewableCurtailmentAll, bins=20, color='lightblue',alpha=0.5)
+    plt.locator_params(axis="x", nbins=4)
+    plt.grid(linewidth=0.25)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=12)
