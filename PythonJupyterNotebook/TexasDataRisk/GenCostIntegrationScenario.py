@@ -182,7 +182,6 @@ def GenCostIntegrationScen( DifferenceLoadWindSolar, Thresold, GenerationCostAll
         ax_hist_y.hist(HighGenCost,bins=20,orientation = 'horizontal',alpha=0.4)
         ax_hist_y.axis('off')
         ax_hist_y.invert_xaxis()
-    
     return HighGenCost, IntegrationScen, ax_scatter, probability
 
 
