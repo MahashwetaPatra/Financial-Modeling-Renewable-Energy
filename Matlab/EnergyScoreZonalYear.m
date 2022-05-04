@@ -3,7 +3,7 @@
 %  plots for solar, wind.
 %
 % HIST:  - 7 Nov, 2021: Created by Patra
-%         
+%           File path direction might need to be changed for different version     
 %=========================================================================
 tic
 clc;close all; 
@@ -14,33 +14,38 @@ zones{1}='East';zones{2}='Coast';zones{3}='Far_West';zones{4}='North';
 zones{5}='North_Central';zones{6}='South';zones{7}='South_Central';zones{8}='West';
 files=dir('Output/ES/ESIntraDay1Zonal/Zonal/*.csv');
 for j=1:8
-    for i=1:4
-        Array = readtable(strcat('Output/ES/ESIntraDay',num2str(i),'Zonal/Zonal/ES_Scoville_',zones{j}));
+    for i=1:1
+        %Array = readtable(strcat('Output/ES/ESIntraDay',num2str(i),'Zonal/Zonal/ES_Scoville_',zones{j}));
         %Array = readtable(strcat('Output/ES/ESDAZonal/Zonal/ES_Scoville_',zones{j}));
-        date=1:1:730;% plotting the energy scores against days
+        Array = readtable(strcat('Output2/ES/ESDANew/ES_Scoville_',zones{j}));
+        
         loadES=Array{:,2}; % considering the Load energy score
         solarES=Array{:,3}; % considering the Solar energy score
         windES=Array{:,4}; % considering the Wind energy score
         allES=Array{:,5}; % considering the overall energy score
+        L=length(solarES);
+        date=1:1:L; %730;% plotting the energy scores against days
+
         figure(1);% plots the energy score for wind
         subplot(8,1,j)% plots the energy score for wind
         plot(date,solarES,'.-')
         hold on;
         ylabel(strcat('solar-',zones(j)))
         grid on;
-        xticks(1:31:730);
+        xticks(1:31:L);
         year=char(date1);
-        xlim([1, 730]);
+        xlim([1, L]);
         xticklabels(num2str(year));
+
         figure(2);% plots the energy score for wind
         subplot(8,1,j)% plots the energy score for wind
         plot(date,windES,'.-')
         hold on;
         ylabel(strcat('wind-',zones(j)))
         grid on;
-        xticks(1:31:730);
+        xticks(1:31:L);
         year=char(date1);
-        xlim([1, 730]);
+        xlim([1, L]);
         xticklabels(num2str(year));
     end
 end
