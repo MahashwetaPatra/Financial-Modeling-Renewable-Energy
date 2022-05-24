@@ -6,14 +6,14 @@ figure;
 for i=1:length(version1Wind)
     p(1)=x(i);v(1)=version1Wind(i);
     p(2)=y(i);v(2)=version2Wind(i);
-    if (v(1)==0.0 || v(2)==0.0)
+    if (v(1)==0 || v(2)==0)
         %plot(p,v,'o', 'LineWidth',2)   
         %hold on;   
 
     else 
         plot(p,v,'-o', 'LineWidth',2)   
         hold on;
-        %ylim([0.01 0.1])
+
     end
 end
 grid on;
@@ -26,15 +26,8 @@ KSScorePlot = figure;
 for i=1:length(version1Solar)
     p(1)=x(i);v(1)=version1Solar(i);
     p(2)=y(i);v(2)=version2Solar(i);
-    if (v(1)==0.0 || v(2)==0.0)
-        %plot(p,v,'o', 'LineWidth',2)   
-        %hold on;   
-
-    else 
-        plot(p,v,'-o', 'LineWidth',2)   
-        hold on;
-        %ylim([0.01 0.1])
-    end
+    plot(p,v,'-o', 'LineWidth',2)
+    hold on;
 end
 grid on; 
 title('KS-score for Solar assets, Version1-vs-Version2')

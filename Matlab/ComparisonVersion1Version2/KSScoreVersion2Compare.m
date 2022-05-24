@@ -18,11 +18,12 @@
 clc;close all;clear all;
 assettype='solar';
 TotalAsset=36;
-zones=7;
+zones=8;
 
 %% Acess percentile of version2
 FileDir2=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'Subset/');
-KSScoreValuesVersion2=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
+KSScoreValuesversion2SolarSubset=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
+version2SolarSubset=KSScoreValuesversion2SolarSubset;
 
 TotalAsset=226;
 zones=8;
@@ -30,18 +31,17 @@ zones=8;
 FileDir1=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'/');
 
 %% The function KSScoreValues calculates the KS scores on zonal and aggregated assets level
-KSScoreValuesVersion1=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
-
-version1Solar=KSScoreValuesVersion1;
-version2Solar=KSScoreValuesVersion2;
+KSScoreValuesversion2SolarAsset=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
+version2SolarAsset=KSScoreValuesversion2SolarAsset;
 
 assettype='wind';
 TotalAsset=115;
-zones=5;
+zones=8;
 
 %% Acess percentile of version2
 FileDir2=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'Subset/');
 KSScoreValuesVersion2=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
+version2WindSubset=KSScoreValuesVersion2;
 
 TotalAsset=264;
 zones=8;
@@ -51,8 +51,7 @@ FileDir1=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_Percentile
 %% The function KSScoreValues calculates the KS scores on zonal and aggregated assets level
 KSScoreValuesVersion1=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
 
-version1Wind=KSScoreValuesVersion1;
-version2Wind=KSScoreValuesVersion2;
+version2WindAsset=KSScoreValuesVersion1;
 
 %% The function KSScorePlot shows the comparison between KS scores for Version1 and Version2
-KSScorePlot=KSScorePlot(version1Solar, version2Solar, version1Wind, version2Wind)
+KSScorePlot=KSScorePlot(version2SolarSubset, version2SolarAsset, version2WindSubset, version2WindAsset)
