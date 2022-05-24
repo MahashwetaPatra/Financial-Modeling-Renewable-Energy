@@ -3,7 +3,7 @@ function KSScorePlot=KSScorePlot(version1Solar, version2Solar, version1Wind, ver
 x=zeros(8,1);
 y=ones(8,1);
 figure;
-for i=1:length(version1Wind)
+for i=1:length(version2Wind)
     p(1)=x(i);v(1)=version1Wind(i);
     p(2)=y(i);v(2)=version2Wind(i);
     plot(p,v,'-o', 'LineWidth',2)   
@@ -16,7 +16,7 @@ legend('FW', 'N', 'NC', 'S', 'W')
 
 
 KSScorePlot = figure;
-for i=1:length(version1Solar)
+for i=1:length(version2Solar)
     p(1)=x(i);v(1)=version1Solar(i);
     p(2)=y(i);v(2)=version2Solar(i);
     plot(p,v,'-o', 'LineWidth',2)
