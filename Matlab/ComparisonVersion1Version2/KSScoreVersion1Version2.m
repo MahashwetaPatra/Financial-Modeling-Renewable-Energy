@@ -15,6 +15,8 @@
 %        
 %=========================================================================
 clc;close all;clear all;
+ZoneName = {'Coast' 'East' 'Far_West' 'North' 'North_Central' 'South' 'South_Central' 'West'};
+
 assettype='solar';
 TotalAsset=36;
 zones=7;
@@ -40,10 +42,8 @@ FileDir2=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_Percentile
 FileDir1=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Output/Percentiles/DA',assettype,'/');
 
 %% The function KSScoreValues calculates the KS scores on zonal and aggregated assets level
-KSScoreValuesVersion1=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
-KSScoreValuesVersion2=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
-version1Wind=KSScoreValuesVersion1;
-version2Wind=KSScoreValuesVersion2;
+[version1Wind,ZonalDistribution]=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
+[version2Wind,ZonalDistribution]=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
 
 %% The function KSScorePlot shows the comparison between KS scores for Version1 and Version2
-KSScorePlot=KSScorePlot(version1Solar, version2Solar, version1Wind, version2Wind)
+[KSScorePlot1, KSScorePlot2 ]=KSScorePlot(version1Solar, version2Solar, version1Wind, version2Wind)

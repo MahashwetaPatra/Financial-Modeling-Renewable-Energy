@@ -16,42 +16,34 @@
 %        
 %=========================================================================
 clc;close all;clear all;
+ZoneName = {'Coast' 'East' 'Far_West' 'North' 'North_Central' 'South' 'South_Central' 'West'};
+zones=8;
+
+%% Acess percentile of version2+solar+subset assets and calculates KS score values
 assettype='solar';
 TotalAsset=36;
-zones=8;
-
-%% Acess percentile of version2
 FileDir2=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'Subset/');
-KSScoreValuesversion2SolarSubset=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
+KSScoreValuesversion2SolarSubset=KSScoreValues(FileDir2, assettype, TotalAsset, zones, ZoneName);
 version2SolarSubset=KSScoreValuesversion2SolarSubset;
 
+%% Acess percentile of version2+solar+All assets and calculates KS score values
 TotalAsset=226;
-zones=8;
-%% Acess percentile of version1
 FileDir1=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'/');
-
-%% The function KSScoreValues calculates the KS scores on zonal and aggregated assets level
-KSScoreValuesversion2SolarAsset=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
+KSScoreValuesversion2SolarAsset=KSScoreValues(FileDir1, assettype, TotalAsset, zones, ZoneName);
 version2SolarAsset=KSScoreValuesversion2SolarAsset;
 
+%% Acess percentile of version2+wind+subset assets and calculates KS score values
 assettype='wind';
 TotalAsset=115;
-zones=8;
-
-%% Acess percentile of version2
 FileDir2=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'Subset/');
-KSScoreValuesVersion2=KSScoreValues(FileDir2, assettype, TotalAsset, zones);
+KSScoreValuesVersion2=KSScoreValues(FileDir2, assettype, TotalAsset, zones, ZoneName);
 version2WindSubset=KSScoreValuesVersion2;
 
+%% Acess percentile of version2+wind+All assets and calculates KS score values
 TotalAsset=264;
-zones=8;
-%% Acess percentile of version1
 FileDir1=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/TX_PercentileEnergyScore20220427/Output2/Percentiles/DA',assettype,'/');
-
-%% The function KSScoreValues calculates the KS scores on zonal and aggregated assets level
-KSScoreValuesVersion1=KSScoreValues(FileDir1, assettype, TotalAsset, zones);
-
+KSScoreValuesVersion1=KSScoreValues(FileDir1, assettype, TotalAsset, zones, ZoneName);
 version2WindAsset=KSScoreValuesVersion1;
 
-%% The function KSScorePlot shows the comparison between KS scores for Version1 and Version2
-KSScorePlot=KSScorePlot(version2SolarSubset, version2SolarAsset, version2WindSubset, version2WindAsset)
+%% The function KSScorePlot shows the comparison between KS scores for Version2: subset and all asset
+[KSScorePlot1, KSScorePlot2 ]=KSScorePlot(version2SolarSubset, version2SolarAsset, version2WindSubset, version2WindAsset)
