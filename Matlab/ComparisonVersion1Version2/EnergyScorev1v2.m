@@ -1,6 +1,6 @@
 %
 % NOTE:    plots energy score for all the aggregated assets, for wind and
-%          solar assets
+%          solar assets for Version 1 and version 2
 %
 % HIST:  - 10 Aug, 2021: Created by Patra
 %           File path direction might need to be changed for different version 
