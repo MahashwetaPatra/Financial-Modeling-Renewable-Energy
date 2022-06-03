@@ -40,9 +40,9 @@ end
 axes(ZonalDistribution,'visible','off'); 
 
 %%Plot the distribution of KS scores for all assets
-size(KSScoreAllAsset(:,3))
+size(KSScoreAllAsset)
 figure();
-histogram(KSScoreAllAsset(:,3),30)
+histogram(KSScoreAllAsset,30)
 hold on;
 plot(KSScoreValues,yaxis, '.r', 'Markersize',10)
 title(strcat('KS score distribution for All ',assettype, ' assets'))
