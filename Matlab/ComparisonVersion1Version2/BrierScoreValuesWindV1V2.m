@@ -9,7 +9,7 @@
 %=========================================================================
 tic
 clc;close all; clear all;
-parfor j=1:2
+for j=1:2
     if j==1
         % version 1
         files = dir('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/CSV/DA/SimDat_20170101/wind/*.csv');
@@ -32,7 +32,7 @@ parfor j=1:2
                 name=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/LiveSimulation/TX_SolarWindLoad_20220503/TX_SolarWindLoad_20220427/CSV/DA/SimDat_',year,'/wind/',filename);
             end
             Array = readtable(name);
-            for column=1:24 %considers all the six hours
+            parfor column=1:24 %considers all the six hours
                 c=column+2;
                 c1=Array{4:1003,c}; % considers column for each hour 
                 n = length(c1);% length of column
