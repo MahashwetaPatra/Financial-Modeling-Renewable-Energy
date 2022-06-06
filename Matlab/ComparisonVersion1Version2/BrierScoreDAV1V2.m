@@ -1,7 +1,7 @@
 %
 % NOTE:    Calls all the solar assets, and for each assets calculates the Brier scores for the event
-%          of maximum solar generation plot the histograms for the Brier score, and compares the wind assets 
-%          for version1 and version2 in figure 7 in the report
+%          of maximum solar generation plot the histograms for the Brier score, and compares the solar assets 
+%          for version1 and version2-Subset and version2 all assets in figure 7 in the report
 %          
 %
 % HIST:  - 15 Nov, 2021: Created by Patra

@@ -1,7 +1,7 @@
 %
 % NOTE:    Calls all the wind assets, and for each assets calculates the Brier scores for the event
 %          of zero wind generation plot the histograms for the Brier score, and compares the wind assets 
-%          for version1 and version2 in figure 7 in the report
+%          for version1,version2 subset assets and version2 all assets in figure 7 in the report
 %          
 %
 % HIST:  - 15 Nov, 2021: Created by Patra
