@@ -9,11 +9,16 @@
 %=========================================================================
 tic
 clc;close all; clear all;
-for j=1:2
+for j=1:3
     BrierScoreSeries=[];
     if j==1
+        % version 1
         files = dir('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/CSV/DA/SimDat_20170101/solar/*.csv');
-    else
+    elseif j==2
+        % version 2 Subset Assets
+        files = dir('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/CSV/DA/SimDat_20170101/solar/*.csv');
+    elseif j==3
+        % version 2 All Assets
         files = dir('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/LiveSimulation/TX_SolarWindLoad_20220503/TX_SolarWindLoad_20220427/CSV/DA/SimDat_20170101/solar/*.csv');
     end
     for i=1:length(files)
@@ -26,8 +31,13 @@ for j=1:2
         for k=1:730
             year=char(date(k));
             if j==1
+                % version 1
                 name=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/CSV/DA/SimDat_',year,'/solar/',string(filename));
-            else
+            elseif j==2
+                % version 2 Subset Assets
+                name=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/LiveSimulation/TX_SolarWindLoad_20220503/TX_SolarWindLoad_20220427/CSV/DA/SimDat_',year,'/solar/',string(filename));
+            elseif j==3
+                % version 2 All Assets
                 name=strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/LiveSimulation/TX_SolarWindLoad_20220503/TX_SolarWindLoad_20220427/CSV/DA/SimDat_',year,'/solar/',string(filename));
             end
             Array = readtable(name);
@@ -62,7 +72,9 @@ for j=1:2
         end
     end
     figure(1)
-    subplot(1,2,j)
+    subplot(1,3,j)
     histogram(BrierScoreSeries,25)
+    csvwrite(strcat('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/BrierScore/Solar_BrierScore',num2str(j),'.csv'),BrierScoreSeries,1,1);
+
 end
 toc
