@@ -9,3 +9,8 @@
  **NOTE for EnergyScore (script):**
  plots energy score generated running the python file 'run_script.ipynb' for all the aggregated assets, for wind and solar assets for Version 1 and version 2 compare the energy score for the two version2 and gives the mean of the energy score and for how many days the version 2 works better than version 1. It generates the figure 2 in the report.
 
+** NOTE for Brier score (script) for the event maximum solar generation:** 
+Calls all the solar assets, and for each assets calculates the Brier scores for the event of maximum solar generation plot the histograms for the Brier score, and compares the solar assets for version1 and version2-Subset and version2 all assets in figure 7 in the report
+
+** NOTE: for Brier Score for the event zero wind generation: **
+Calls all the wind assets, and for each assets calculates the Brier scores for the event of zero wind generation plot the histograms for the Brier score, and compares the wind assets for version1,version2 subset assets and version2 all assets in figure 7 in the report
