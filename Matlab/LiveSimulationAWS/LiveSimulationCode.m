@@ -1,3 +1,8 @@
+%
+% NOTE: Generates the input in the format for the AWS
+% HIST:  - 06/08, 2022: Created by Patra
+%         
+%=========================================================================
 tic
 clc;close all; clear all;
 Time=1:1:24; %Time steps
@@ -13,7 +18,7 @@ for i=1:length(files)
     plot(Time, c1,'b' )
     hold on;
 end
-csvwrite(strcat('C:/Users/Mahashweta Patra/Dropbox/MikeLudkovski/LiveSimulation/LiveSimulationSolar.csv'),ColumnSolar,1,1);
+csvwrite(strcat('C:/Users/Mahashweta Patra/Dropbox/MikeLudkovski/Scovilleriskpartners/LiveSimulation0412/LiveSimulationSolar.csv'),ColumnSolar,1,1);
 
 files = dir('C:/Users/Mahashweta Patra/Documents/MikeLudkovski/Scovilleriskpartners/LiveSimulation/TX_SolarWindLoad_20220503/TX_SolarWindLoad_20220427/CSV/DA/SimDat_20170101/wind/*.csv');
 ColumnWind=[];
@@ -27,4 +32,4 @@ for i=1:length(files)
     plot(Time, c1,'b' )
     hold on;
 end
-csvwrite(strcat('C:/Users/Mahashweta Patra/Dropbox/MikeLudkovski/LiveSimulation/LiveSimulationWind.csv'),ColumnWind,1,1);
+csvwrite(strcat('C:/Users/Mahashweta Patra/Dropbox/MikeLudkovski/Scovilleriskpartners/LiveSimulation0412/LiveSimulationWind.csv'),ColumnWind,1,1);
